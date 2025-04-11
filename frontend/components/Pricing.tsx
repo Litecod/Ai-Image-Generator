@@ -54,7 +54,7 @@ const Pricing = () => {
                                             <p><span>{item.credit}k</span> credit/ {item.name}</p>
                                             <hr />
                                             <button className='w-full py-[0.8rem] border-[2px] border-[#0000004a] bg-gray-800 text-[#fff] rounded-xl'>Get Started</button>
-                                            <p>What's Included</p>
+                                            <p>What&#39;s Included</p>
                                             <div className="flex flex-col gap-4">
                                                 <div className="flex gap-2 items-center">
                                                     <IoCheckmarkDoneOutline className=" text-[0.8rem]" />
