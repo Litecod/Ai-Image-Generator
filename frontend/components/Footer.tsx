@@ -60,7 +60,7 @@ const Footer = () => {
                     <FaGithub />
                     <FaDiscord />
                 </div>
-                <div className="">
+                <div className=" mt-[2rem] md:mt-0">
                     © 2025 <span className="underline">LiteCode</span>. All rights reserved.
                 </div>
             </div>

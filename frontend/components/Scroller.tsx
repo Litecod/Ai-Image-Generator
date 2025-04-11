@@ -14,7 +14,7 @@ const Scroller = () => {
 
                         return (
                             <div key={index} className="relative w-[18rem] h-[11rem] im">
-                                <Image src={image.img} alt="image" className="w-full h-full object-fit rounded-xl" />
+                                <Image src={image.img} alt="image" className="w-full h-full object-cover rounded-xl" />
                             </div>
 
                         )
@@ -25,7 +25,7 @@ const Scroller = () => {
 
                         return (
                             <div key={index} className="relative w-[18rem] h-[11rem] im">
-                                <Image src={image.img} alt="image" className="w-full h-full object-fit rounded-xl" />
+                                <Image src={image.img} alt="image" className="w-full h-full object-cover rounded-xl" />
                             </div>
 
                         )
@@ -36,7 +36,7 @@ const Scroller = () => {
 
                         return (
                             <div key={index} className="relative w-[18rem] h-[11rem] im">
-                                <Image src={image.img} alt="image" className="w-full h-full object-fit rounded-xl" />
+                                <Image src={image.img} alt="image" className="w-full h-full object-cover rounded-xl" />
                             </div>
 
                         )
