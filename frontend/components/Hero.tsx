@@ -19,9 +19,4 @@ const Hero = () => {
     )
 }
 
-export default Hero
-
-//Imagine AI Art Generator
-//Create AI Art and turn your imaginations into reality with Imagine's AI Art Generator and produce stunning visuals to cover up your artistic thoughts.
-
-
+export default Hero;
