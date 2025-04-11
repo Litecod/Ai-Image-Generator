@@ -1,7 +1,7 @@
 "use client"
 
 import CountUp from "react-countup";
-import { FaDiscord, FaPeopleGroup, FaPhone } from "react-icons/fa6";
+import { FaDiscord, FaPeopleGroup } from "react-icons/fa6";
 import { RiMobileDownloadLine } from "react-icons/ri";
 
 const CountUps = () => {

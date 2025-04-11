@@ -10,7 +10,6 @@ import { MdOutlinePriceChange } from 'react-icons/md';
 const Pricing = () => {
     const [priceTag, setPriceTag] = useState("weekly");
     const [price, setPrice] = useState(priceOne)
-    const [bg, setbg] = useState(false)
 
     useEffect(() => {
         if (priceTag === "yearly") {
@@ -42,7 +41,7 @@ const Pricing = () => {
                             {
                                 price.map((item, index) => {
                                     return (
-                                        <div key={index} onClick={() => setbg(true)} className={`flex flex-col gap-5 border-[0.5px] border-[#505050] bg-[#1e1e1e] text-[#fff] p-[1rem] rounded-xl hover:bg-[#fff] hover:text-[#000]  w-full md:max-w-[25rem] xl:max-w-[20.5rem] duration-700 mx-auto lg:mx-0`}>
+                                        <div key={index} className={`flex flex-col gap-5 border-[0.5px] border-[#505050] bg-[#1e1e1e] text-[#fff] p-[1rem] rounded-xl hover:bg-[#fff] hover:text-[#000]  w-full md:max-w-[25rem] xl:max-w-[20.5rem] duration-700 mx-auto lg:mx-0`}>
                                             <h2>{item.name}</h2>
                                             <p>{item.description}</p>
                                             <div className="flex items-center">
