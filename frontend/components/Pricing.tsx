@@ -29,19 +29,19 @@ const Pricing = () => {
                 <h1 className='text-center rounded-xl border border-[#ffffff3e] px-[1rem] py-[0.3rem] mx-auto max-w-[9rem] flex items-center justify-between'><MdOutlinePriceChange /> Our Pricing</h1>
                 <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[25rem] mx-auto'>Get Started with ImagineArt</h2>
                 <div className="mt-[4rem]">
-                    <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-xl gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth">
-                        <p className={`px-[1rem] py-[0.6rem] rounded-xl ${priceTag === "weekly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("weekly")}>Weekly</p>
-                        <p className={`px-[1rem] py-[0.6rem] rounded-xl ${priceTag === "monthly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("monthly")}>Monthly</p>
-                        <p className={`px-[1rem] py-[0.6rem] rounded-xl ${priceTag === "yearly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("yearly")}>Yearly</p>
+                    <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth">
+                        <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "weekly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("weekly")}>Weekly</p>
+                        <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "monthly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("monthly")}>Monthly</p>
+                        <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "yearly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("yearly")}>Yearly</p>
                     </div>
                 </div>
-                <div className="mt-[2rem] flex ">
+                <div className="mt-[2rem] ">
                     <div className="shadow-md  ">
-                        <div className=" relative  p-[1rem] flex justify-between gap-[1rem] flex-wrap">
+                        <div className=" p-[1rem] flex justify-between gap-[1rem] flex-wrap">
                             {
                                 price.map((item, index) => {
                                     return (
-                                        <div key={index} className={`flex flex-col gap-5 border-[0.5px] border-[#505050] bg-[#1e1e1e] text-[#fff] p-[1rem] rounded-xl hover:bg-[#fff] hover:text-[#000]  w-full md:max-w-[25rem] xl:max-w-[20.5rem] duration-700 mx-auto lg:mx-0`}>
+                                        <div key={index} className={`flex flex-col gap-5 border-[0.5px] border-[#505050] bg-[#1e1e1e] text-[#fff] p-[1rem] rounded-xl hover:bg-[#fff] hover:text-[#000]  w-full md:max-w-[25rem] xl:max-w-[25rem] duration-700 mx-auto lg:mx-0`}>
                                             <h2>{item.name}</h2>
                                             <p>{item.description}</p>
                                             <div className="flex items-center">

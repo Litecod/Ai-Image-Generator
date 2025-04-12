@@ -1,15 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline:opsz,wght@10..72,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prata&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
-
 
 body {
   font-family: "Poppins", sans-serif;
 }
+.logo {
+  font-family: "Poppins", sans-serif;
+}
 
+/**   font-family: "Lato", sans-serif;**/
 .scroll {
-  -webkit-mask: linear-gradient(90deg,transparent, black 20%, black 80%, transparent);
-  mask: linear-gradient(90deg,transparent, black 20%, black 80%, transparent);
-
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+  mask: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
 }
 
 .animate-infinite {
@@ -25,7 +33,7 @@ body {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-50% - 20px))
+    transform: translateX(calc(-50% - 20px));
   }
 }
 
@@ -34,6 +42,61 @@ body {
     transform: translateX(-50);
   }
   100% {
-    transform: translateX(calc(-50% - 20px))
+    transform: translateX(calc(-50% - 20px));
+  }
+}
+
+.border-animate {
+  position: relative;
+  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: white;
+  overflow: hidden;
+}
+
+.border-animate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, white, transparent);
+  -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderMove 2s linear infinite;
+}
+
+@keyframes borderMove {
+  0% {
+      background-position: -100% 0;
+      background: #fff;
+  }
+  50% {
+      background-position: 100% 0;
+      background: #2a006a;
+  }
+  100% {
+      background-position: 100% 0;
+      background: #fff;
+  }
+}
+
+.star {
+  animation: shiny 2s linear infinite;
+}
+
+@keyframes shiny {
+  0% {
+      color: #cacaca;
+  }
+  50% {
+      color: #fff;
+  }
+  100% {
+      color: #cacaca;
   }
 }
