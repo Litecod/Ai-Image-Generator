@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { priceOne, priceTwo, priceThree } from '@/data/price';
 import { MdOutlinePriceChange } from 'react-icons/md';
+import Header from './Header';
 
 
 
@@ -26,7 +27,7 @@ const Pricing = () => {
     return (
         <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] mt-[5rem] mb-[2rem]'>
             <div className="">
-                <h1 className='text-center rounded-xl border border-[#ffffff3e] px-[1rem] py-[0.3rem] mx-auto max-w-[9rem] flex items-center justify-between'><MdOutlinePriceChange /> Our Pricing</h1>
+                <Header icons={<MdOutlinePriceChange />} details={"Our Pricing"}/>
                 <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[25rem] mx-auto'>Get Started with ImagineArt</h2>
                 <div className="mt-[4rem]">
                     <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth">

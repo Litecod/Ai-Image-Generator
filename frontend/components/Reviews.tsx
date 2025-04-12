@@ -3,12 +3,13 @@ import Image from 'next/image'
 import React from 'react'
 import { BiSolidHappyHeartEyes } from 'react-icons/bi'
 import star from "@/public/star.png"
+import Header from './Header'
 
 const Reviews = () => {
     return (
         <div className='px-[0.8rem] md:px-[2rem] lg:px-[5rem] pt-[3rem] pb-[3rem] bg-[url(../public/download.png)] gray-200'>
             <div className="">
-                <h1 className='text-center rounded-xl border border-[#ffffff3e] px-[1rem] py-[0.3rem] mx-auto max-w-[14.5rem] flex items-center justify-between'><BiSolidHappyHeartEyes className='text-yellow-400' /> What Our Clients Says</h1>
+                <Header icons={<BiSolidHappyHeartEyes className='text-yellow-400' /> } details='What Our Clients Says'/>
                 <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[35rem] mx-auto'>Join 1M+ users creating art using Imagine</h2>
                 <div className="mt-[2rem] flex justify-between gap-[3rem] flex-wrap">
                     {reviewss.map((item, index) => {

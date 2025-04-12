@@ -1,12 +1,17 @@
 import { FaDiscord, FaFacebook, FaGithub, FaInstagram } from "react-icons/fa6"
+import Image from "next/image"
+import logo from "@/public/logo.jpg"
 
 const Footer = () => {
     return (
         <div className="px-[0.8rem] sm:px-[2rem] md:px-[2rem] lg:px-[5rem] bg-gray-900 py-[3rem]">
             <div className="flex flex-col md:flex-row justify-between">
                 <div className="">
-                    <h1 className="text-[1.5rem]">IMAGE GEN</h1>
-                    <p>Endless Possibilities. Just Imagine.</p>
+                    <div className="flex gap-2 items-center">
+                        <Image src={logo} alt="" className="w-[2.5rem] sm:w-[3rem] h-[2.5rem] sm:h-[3rem] rounded-full" />
+                        <p className="text-[1.3rem] sm:text-[1.7rem] logo font-medium">Cartoonify 3D</p>
+                    </div>
+                    <p className="mt-[1rem]">Endless Possibilities. Just Imagine.</p>
                 </div>
             </div>
 

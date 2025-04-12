@@ -20,6 +20,9 @@ body {
   mask: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
 }
 
+.left {
+  
+}
 .animate-infinite {
   animation: scrolls 100s linear infinite;
 }
@@ -100,3 +103,4 @@ body {
       color: #cacaca;
   }
 }
+
