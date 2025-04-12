@@ -27,7 +27,7 @@ const Pricing = () => {
     return (
         <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] mt-[5rem] mb-[2rem]'>
             <div className="">
-                <Header icons={<MdOutlinePriceChange />} details={"Our Pricing"}/>
+                <Header icons={MdOutlinePriceChange} details={"Our Pricing"} clas=''/>
                 <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[25rem] mx-auto'>Get Started with ImagineArt</h2>
                 <div className="mt-[4rem]">
                     <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth">

@@ -9,7 +9,7 @@ const Reviews = () => {
     return (
         <div className='px-[0.8rem] md:px-[2rem] lg:px-[5rem] pt-[3rem] pb-[3rem] bg-[url(../public/download.png)] gray-200'>
             <div className="">
-                <Header icons={<BiSolidHappyHeartEyes className='text-yellow-400' /> } details='What Our Clients Says'/>
+                <Header icons={BiSolidHappyHeartEyes } clas='text-yellow-500' details='What Our Clients Says'/>
                 <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[35rem] mx-auto'>Join 1M+ users creating art using Imagine</h2>
                 <div className="mt-[2rem] flex justify-between gap-[3rem] flex-wrap">
                     {reviewss.map((item, index) => {

@@ -2,7 +2,10 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className="overflow-y-scroll">
+      <div className='h-screen'>page</div>
+      <div className='h-screen'>page</div>
+    </div>
   )
 }
 
