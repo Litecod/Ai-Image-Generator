@@ -1,9 +1,21 @@
-import Image from "next/image";
+"use client"
+
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+
+  const [show, setShow] = useState("")
+
+  const router = useRouter()
+  const pathname = usePathname()
+
+  if (pathname.includes("/") || show == "") {
+    router.push("/generate")
+  }
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      
+    <div className="">
+      {show}
     </div>
   );
 }

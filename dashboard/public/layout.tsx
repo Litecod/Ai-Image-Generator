@@ -16,16 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className=" bg-[#fff] text-[#000] overflow-hidden"
+        className="overflow-hidden bg-[#fff] text-[#000]"
       >
-        {/* flex w-full gap-[1rem] pt-[3.2rem] md:pt-[4rem] */}
         <Navbar />
-          <Sidebar />
-          <div className=" w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl pt-[5rem] overflow-y-scroll h-screen">
-            {children}
-          </div>
-
-
+        <Sidebar />
+        <div className="bg-gray-100 w-[80%] md:w-[70%] lg:w-[83%] sm:float-right overflow-hidden rounded-xl mt-[5rem]">
+        {children}
+        </div>
       </body>
     </html>
   );
