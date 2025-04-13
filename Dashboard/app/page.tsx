@@ -1,21 +1,18 @@
-"use client"
+"use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 
 export default function Home() {
+  const show = "";
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const [show, setShow] = useState("")
+  useEffect(() => {
+    if (pathname === "/" || show === "") {
+      router.push("/generate");
+    }
+  }, [pathname, show, router]);
 
-  const router = useRouter()
-  const pathname = usePathname()
-
-  if (pathname.includes("/") || show == "") {
-    router.push("/generate")
-  }
-  return (
-    <div className="">
-      {show}
-    </div>
-  );
+  return <div className="">{show}</div>;
 }

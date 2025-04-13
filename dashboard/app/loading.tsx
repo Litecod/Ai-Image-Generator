@@ -3,7 +3,7 @@
 import React from 'react';
 
 const Loading = () => {
-    
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
             <div className="text-center space-y-8">
