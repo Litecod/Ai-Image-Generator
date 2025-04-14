@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
-import upload from "@/public/upload_area.png";
 import Image from 'next/image';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { BsImageFill } from 'react-icons/bs';
