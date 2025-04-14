@@ -15,8 +15,8 @@ const Navbar = ({setClick}:NavbarProps) => {
           <Image src={logo} alt="" className="w-[2.5rem] sm:w-[3rem] h-[2.5rem] sm:h-[3rem] rounded-full" />
           <p className="text-[1.3rem] sm:text-[1.7rem] logo font-medium">Cartoonify 3D</p>
         </div>
-        <Link className="rounded-xl bg-[#fff] border border-[#06060699] px-[1.5rem] py-[0.5rem] hover:bg-gray-100 duration-150" href={"/login"}>login</Link>
-        <div className="p-[0.8rem] bg-gray-200 rounded-xl cursor-pointer" onClick={() => setClick && setClick((prev:boolean) => !prev)}>
+        <Link className="rounded-xl bg-[#fff] border border-[#06060699] px-[0.8rem] text-[0.8rem] sm:text-[1rem] sm:px-[1.5rem] py-[0.5rem] hover:bg-gray-100 duration-150" href={"/login"}>login</Link>
+        <div className="p-[0.8rem] bg-gray-200 rounded-xl cursor-pointer sm:hidden" onClick={() => setClick && setClick((prev:boolean) => !prev)}>
           <HiOutlineSquare3Stack3D className="" />
         </div>
       </div>

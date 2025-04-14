@@ -23,7 +23,7 @@ const Pricing = () => {
 
 
   return (
-    <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[2rem] bg-gray-100 rounded-xl'>
+    <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[2rem] bg-gray-100 rounded-xl h-screen sm-h-auto'>
       <div className="">
         <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth text-[#fff]">
           <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "weekly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("weekly")}>Weekly</p>

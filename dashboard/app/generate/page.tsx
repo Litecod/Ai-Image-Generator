@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from 'react';
 import upload from "@/public/upload_area.png";
 import Image from 'next/image';
 import { HiOutlineSparkles } from 'react-icons/hi';
+import { BsImageFill } from 'react-icons/bs';
 
 type ImageFile = {
   file: File;
@@ -76,14 +77,15 @@ const GeneratePage = () => {
   };
 
   return (
-    <div className="relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[2rem] bg-gray-100 rounded-xl">
-      <div className="container mx-auto p-4">
+    <div className="relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[0rem] pt-[15rem] sm:pt-[2rem] bg-gray-100 rounded-xl h-screen sm:h-auto">
+      <div className="container mx-auto sm:p-4 ">
         <label htmlFor='file' className='mx-auto block'>
-          <Image
-            src={upload}
-            alt='Upload area'
-            className='w-[17rem] h-[15rem] sm:w-[20rem] sm:h-[18rem] mx-auto cursor-pointer rounded-xl'
-          />
+          <div className="w-full h-[13rem] sm:h-[16rem] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
+            <BsImageFill className='mx-auto text-[3rem] font-light text-blue-900 mt-[2rem] sm:mt-[4rem]' />
+            <div className="text-center">
+              <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to download</span> or Drag and Drop</p>
+            </div>
+          </div>
         </label>
         <input
           type="file"
@@ -95,7 +97,7 @@ const GeneratePage = () => {
           id='file'
         />
 
-        <div className={`p-[0.6rem] px-[1rem] items-center w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "mt-[12rem] sm:mt-[12rem]" : "mt-[9rem] sm:mt-[9rem]"}`}>
+        <div className={` absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "sm:mt-[16rem]" : "sm:mt-[13rem]"}`}>
           <div className="flex gap-2 flex-wrap">
             {images.map((image, index) => (
               <div key={index} className="relative group">

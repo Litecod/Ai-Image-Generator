@@ -19,7 +19,7 @@ export default function RootLayout({
       >
         {/* flex w-full gap-[1rem] pt-[3.2rem] md:pt-[4rem] */}
         <NavSide />
-        <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl pt-[5rem] sm:overflow-y-scroll h-screen">
+        <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl sm:pt-[5rem] sm:overflow-y-scroll sm:h-screen">
           {children}
         </div>
 
