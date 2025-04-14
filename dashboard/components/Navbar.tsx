@@ -4,7 +4,7 @@ import logo from "@/public/logo.jpg"
 import { HiOutlineSquare3Stack3D } from "react-icons/hi2"
 
 interface NavbarProps {
-  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  setClick?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Navbar = ({setClick}:NavbarProps) => {
@@ -16,7 +16,7 @@ const Navbar = ({setClick}:NavbarProps) => {
           <p className="text-[1.3rem] sm:text-[1.7rem] logo font-medium">Cartoonify 3D</p>
         </div>
         <Link className="rounded-xl bg-[#fff] border border-[#06060699] px-[1.5rem] py-[0.5rem] hover:bg-gray-100 duration-150" href={"/login"}>login</Link>
-        <div className="p-[0.8rem] bg-gray-200 rounded-xl cursor-pointer" onClick={() => setClick((prev:boolean) => !prev)}>
+        <div className="p-[0.8rem] bg-gray-200 rounded-xl cursor-pointer" onClick={() => setClick && setClick((prev:boolean) => !prev)}>
           <HiOutlineSquare3Stack3D className="" />
         </div>
       </div>

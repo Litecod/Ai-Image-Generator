@@ -11,7 +11,7 @@ import imgOne from "@/public/000.jpg"
 
 
 interface NavbarProps {
-    click: boolean;
+    click?: boolean;
   }
 const Sidebar = ({click}:NavbarProps) => {
     const pathname = usePathname()
