@@ -82,9 +82,7 @@ const GeneratePage = () => {
           <Image
             src={upload}
             alt='Upload area'
-            className='w-[20rem] h-[18rem] mx-auto cursor-pointer'
-            width={800}
-            height={720}
+            className='w-[17rem] h-[15rem] sm:w-[20rem] sm:h-[18rem] mx-auto cursor-pointer rounded-xl'
           />
         </label>
         <input
@@ -97,7 +95,7 @@ const GeneratePage = () => {
           id='file'
         />
 
-        <div className={`p-[0.6rem] px-[1rem] items-center w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "mt-[12rem]" : "mt-[9rem]"}`}>
+        <div className={`p-[0.6rem] px-[1rem] items-center w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "mt-[12rem] sm:mt-[12rem]" : "mt-[9rem] sm:mt-[9rem]"}`}>
           <div className="flex gap-2 flex-wrap">
             {images.map((image, index) => (
               <div key={index} className="relative group">

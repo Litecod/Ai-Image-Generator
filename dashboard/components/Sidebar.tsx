@@ -9,10 +9,14 @@ import img from "@/public/010.jpg"
 import imgTwo from "@/public/020.jpg"
 import imgOne from "@/public/000.jpg"
 
-const Sidebar = () => {
+
+interface NavbarProps {
+    click: boolean;
+  }
+const Sidebar = ({click}:NavbarProps) => {
     const pathname = usePathname()
     return (
-        <div className='fixed w-full sm:w-[20%] md:w-[30%] lg:w-[17%] max-h-screen bg-[#fff] sm:absolute pt-[5rem] z-10 overflow-x-hidden'>
+        <div className={`fixed w-full sm:w-[20%] md:w-[30%] lg:w-[17%] max-h-screen bg-gray-50 sm:absolute pt-[5rem] z-10 overflow-x-hidden duration-150 ${click === false ? "mt-[-180px] opacity-0" : "opacity-100 mt-0"}`}>
             <div className="flex flex-col gap-6 pt-6 py-[0.7rem] sm:py-auto px-[0.7rem] sm:px-[1rem] text-[15px] b">
                 <Link href={"/generate"} className={`w-full px-[1rem] py-[0.5rem] rounded-[20rem] ${pathname.includes("generate") && "bg-black text-white"}`} >
                     <div className="flex gap-2 items-center"><RiAiGenerate2 /><span className='sm:hidden md:block'>Generate</span></div>
