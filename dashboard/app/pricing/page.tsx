@@ -3,238 +3,136 @@
 import React, { useEffect, useState } from 'react';
 import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { priceOne, priceTwo, priceThree } from '@/data/price';
-import { db } from '@/firebase/config';
+import { db } from '@/utils/firebase'; // Import your Firebase config
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { toast } from 'react-hot-toast';
 import { useContexts } from '@/context/AuthContext';
 
-// Enhanced Type Definitions
-type BillingPeriod = "weekly" | "monthly" | "yearly";
-type SubscriptionStatus = "pending" | "active" | "cancelled";
-
-interface PricePlan {
-  id: string;
+type PricePlan = {
   name: string;
   description: string;
-  basePrice: number;
-  discountedPrice?: number;
+  price: number;
   credit: number;
-  imageGenerations: number;
-  concurrentJobs: number;
-  priority: string;
-  styleAccess?: string;
-  premiumFeatures?: string;
-  billingPeriod: BillingPeriod;
-  isPopular?: boolean;
-}
+  image: number;
+  corcurrency: number;
+  piority: string;
+  style: string;
+  higher: string;
+  period: PricePeriod; // Added period to the type
+};
 
-interface SubscriptionData {
-  userId: string;
-  planId: string;
-  planName: string;
-  pricePaid: number;
-  billingPeriod: BillingPeriod;
-  creditsAllocated: number;
-  status: SubscriptionStatus;
-  startDate: Date;
-  renewalDate?: Date;
-  paymentMethod?: string;
-}
+type PricePeriod = "weekly" | "monthly" | "yearly";
 
 const Pricing = () => {
-  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>("monthly");
-  const [plans, setPlans] = useState<PricePlan[]>([]);
-  const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
-  const { user } = useContexts();
+  const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
+  const [price, setPrice] = useState<PricePlan[]>(priceOne);
+  const [loading, setLoading] = useState(false);
+  const { user } = useContexts(); // Get current user from your auth context
 
-  // Transform and enhance pricing data
   useEffect(() => {
-    const transformPlans = (basePlans: any[], period: BillingPeriod): PricePlan[] => {
-      return basePlans.map(plan => ({
-        id: `${period}-${plan.name.toLowerCase().replace(/\s+/g, '-')}`,
-        ...plan,
-        billingPeriod: period,
-        discountedPrice: period === "yearly" ? plan.price * 0.8 : undefined,
-        imageGenerations: plan.image,
-        concurrentJobs: plan.corcurrency,
-        priority: plan.piority,
-        styleAccess: plan.style,
-        premiumFeatures: plan.higher,
-        isPopular: plan.name === "Pro"
-      }));
-    };
-
-    if (billingPeriod === "yearly") {
-      setPlans(transformPlans(priceThree, billingPeriod));
-    } else if (billingPeriod === "monthly") {
-      setPlans(transformPlans(priceTwo, billingPeriod));
+    if (priceTag === "yearly") {
+      setPrice(priceThree.map(p => ({ ...p, period: priceTag })));
+    } else if (priceTag === "monthly") {
+      setPrice(priceTwo.map(p => ({ ...p, period: priceTag })));
     } else {
-      setPlans(transformPlans(priceOne, billingPeriod));
+      setPrice(priceOne.map(p => ({ ...p, period: priceTag })));
     }
-  }, [billingPeriod]);
+  }, [priceTag]);
+
+  const handlePeriodChange = (period: PricePeriod) => {
+    setPriceTag(period);
+  };
 
   const handleSubscribe = async (plan: PricePlan) => {
     if (!user) {
-      toast.error("Please sign in to subscribe");
+      alert("Please sign in to subscribe");
       return;
     }
 
-    setIsLoading(prev => ({ ...prev, [plan.id]: true }));
+    console.log(price)
 
+    setLoading(true);
     try {
-      const subscriptionData: SubscriptionData = {
+      await addDoc(collection(db, "subscriptions"), {
         userId: user.uid,
-        planId: plan.id,
-        planName: plan.name,
-        pricePaid: plan.discountedPrice || plan.basePrice,
-        billingPeriod: plan.billingPeriod,
-        creditsAllocated: plan.credit,
-        status: "pending",
-        startDate: new Date(),
-        renewalDate: calculateRenewalDate(plan.billingPeriod)
-      };
+        plan: plan.name,
+        price: plan.price,
+        period: plan.period,
+        credits: plan.credit,
+        createdAt: serverTimestamp(),
+        status: "pending" 
+      });
 
-      await addDoc(collection(db, "subscriptions"), subscriptionData);
-      
-      toast.success(`Subscribed to ${plan.name} plan successfully!`);
-      // Redirect to payment or dashboard
+      alert(`Successfully subscribed to ${plan.name} plan!`);
+      // Here you might want to redirect to payment page or dashboard
     } catch (error) {
-      console.error("Subscription error:", error);
-      toast.error("Failed to subscribe. Please try again.");
+      console.error("Error subscribing:", error);
+      alert("Error subscribing. Please try again.");
     } finally {
-      setIsLoading(prev => ({ ...prev, [plan.id]: false }));
+      setLoading(false);
     }
-  };
-
-  const calculateRenewalDate = (period: BillingPeriod): Date => {
-    const date = new Date();
-    switch (period) {
-      case "weekly":
-        date.setDate(date.getDate() + 7);
-        break;
-      case "monthly":
-        date.setMonth(date.getMonth() + 1);
-        break;
-      case "yearly":
-        date.setFullYear(date.getFullYear() + 1);
-        break;
-    }
-    return date;
   };
 
   return (
-    <div className="px-4 md:px-8 lg:px-12 py-8 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Billing Period Selector */}
-        <div className="flex p-1 bg-gray-900 rounded-full gap-1 max-w-xs mx-auto mt-8 text-white">
-          {(["weekly", "monthly", "yearly"] as BillingPeriod[]).map((period) => (
+    <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[2rem] bg-gray-100 rounded-xl min-h-screen'>
+      <div className="max-w-6xl mx-auto">
+        {/* Pricing period selector */}
+        <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth text-white">
+          {(["weekly", "monthly", "yearly"] as PricePeriod[]).map((period) => (
             <button
               key={period}
-              className={`px-4 py-2 rounded-full capitalize transition-all flex-1 text-sm ${
-                billingPeriod === period 
-                  ? "bg-white text-gray-900 font-medium" 
-                  : "hover:bg-gray-700"
-              }`}
-              onClick={() => setBillingPeriod(period)}
+              className={`px-[1rem] py-[0.6rem] rounded-[20rem] capitalize transition-colors ${priceTag === period ? "bg-white text-black" : "hover:bg-gray-700"
+                }`}
+              onClick={() => handlePeriodChange(period)}
             >
               {period}
             </button>
           ))}
         </div>
 
-        {/* Pricing Cards Grid */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {plans.map((plan) => (
-            <div 
-              key={plan.id}
-              className={`relative border rounded-xl p-6 transition-all ${
-                plan.isPopular 
-                  ? "border-2 border-blue-500 shadow-lg bg-white" 
-                  : "border-gray-200 bg-white hover:shadow-md"
-              }`}
+        {/* Pricing cards */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {price.map((item) => (
+            <div
+              key={item.name}
+              className="flex flex-col gap-5 border border-gray-200 hover:bg-[#1e1e1e] hover:text-white p-6 rounded-xl bg-white text-black transition-all duration-300"
             >
-              {plan.isPopular && (
-                <div className="absolute top-0 right-6 -translate-y-1/2 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                  POPULAR
-                </div>
-              )}
+              <h2 className="text-2xl font-bold">{item.name}</h2>
+              <p className="text-gray-600 hover:text-gray-300">{item.description}</p>
 
-              <div className="flex flex-col gap-6">
-                {/* Plan Header */}
-                <div>
-                  <h2 className="text-2xl font-bold">{plan.name}</h2>
-                  <p className="text-gray-600 mt-1">{plan.description}</p>
-                </div>
-
-                {/* Price Display */}
-                <div>
-                  <div className="flex items-end gap-2">
-                    <span className="text-4xl font-bold">
-                      ${plan.discountedPrice || plan.basePrice}
-                    </span>
-                    <span className="text-gray-500 mb-1">/month</span>
-                  </div>
-                  {plan.discountedPrice && (
-                    <div className="flex gap-2 items-center mt-1">
-                      <span className="line-through text-gray-400">
-                        ${plan.basePrice}
-                      </span>
-                      <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded">
-                        Save {Math.round((1 - plan.discountedPrice/plan.basePrice) * 100)}%
-                      </span>
-                    </div>
-                  )}
-                  <p className="text-sm text-gray-500 mt-2">
-                    Billed {billingPeriod === "yearly" ? "annually" : billingPeriod + "ly"}
-                  </p>
-                </div>
-
-                {/* Credits */}
-                <div className="bg-gray-50 p-3 rounded-lg">
-                  <p className="text-sm">
-                    <span className="font-medium">{plan.credit}k</span> credits included
-                  </p>
-                </div>
-
-                {/* Subscribe Button */}
-                <button
-                  onClick={() => handleSubscribe(plan)}
-                  disabled={isLoading[plan.id]}
-                  className={`w-full py-3 rounded-lg font-medium transition-colors ${
-                    plan.isPopular
-                      ? "bg-blue-600 hover:bg-blue-700 text-white"
-                      : "bg-gray-900 hover:bg-gray-800 text-white"
-                  } ${
-                    isLoading[plan.id] ? "opacity-70 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {isLoading[plan.id] ? (
-                    <span className="inline-flex items-center gap-2">
-                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processing...
-                    </span>
-                  ) : (
-                    "Get Started"
-                  )}
-                </button>
-
-                {/* Features List */}
-                <div className="space-y-4">
-                  <h4 className="font-medium text-gray-900">What's included:</h4>
-                  <ul className="space-y-3">
-                    <FeatureItem text={`Up to ${plan.imageGenerations} image generations`} />
-                    <FeatureItem text={`${plan.concurrentJobs} concurrent jobs`} />
-                    <FeatureItem text={`${plan.priority} priority queue`} />
-                    {plan.styleAccess && <FeatureItem text={plan.styleAccess} />}
-                    {plan.premiumFeatures && <FeatureItem text={plan.premiumFeatures} />}
-                    <FeatureItem text="Commercial usage rights" />
-                    <FeatureItem text="Public image visibility" />
-                  </ul>
+              <div className="flex items-baseline">
+                <h3 className='text-4xl font-medium'>${item.price}</h3>
+                <div className="flex flex-col ml-2">
+                  <span className="text-sm">/month</span>
+                  <span className="text-xs">Bill {item.name}</span>
                 </div>
               </div>
+
+              <p className="text-sm">
+                <span className="font-medium">{item.credit}k</span> credit/{item.name}
+              </p>
+
+              <hr className="border-gray-200" />
+
+              <button
+                onClick={() => handleSubscribe(item)}
+                disabled={loading}
+                className={`w-full py-3 border-2 border-gray-200 bg-gray-800 text-white rounded-xl hover:bg-gray-700 transition-colors ${loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+              >
+                {loading ? "Processing..." : "Get Started"}
+              </button>
+
+              <h4 className="font-medium">What's Included</h4>
+
+              <ul className="flex flex-col gap-3">
+                <IncludedItem text={`Up to ~${item.image} Image Generations/year`} />
+                <IncludedItem text="General Commercial Terms" />
+                <IncludedItem text="Image Generations Visibility: Public" />
+                <IncludedItem text={`${item.corcurrency} concurrent Generations`} />
+                <IncludedItem text={`${item.piority} priority Generations`} />
+                {item.style && <IncludedItem text={item.style} />}
+                {item.higher && <IncludedItem text={item.higher} />}
+              </ul>
             </div>
           ))}
         </div>
@@ -243,10 +141,11 @@ const Pricing = () => {
   );
 };
 
-const FeatureItem = ({ text }: { text: string }) => (
-  <li className="flex items-start gap-2">
-    <IoCheckmarkDoneOutline className="text-green-500 mt-0.5 flex-shrink-0" />
-    <span className="text-sm text-gray-700">{text}</span>
+// Helper component for included items
+const IncludedItem = ({ text }: { text: string }) => (
+  <li className="flex gap-2 items-center">
+    <IoCheckmarkDoneOutline className="text-green-500" />
+    <span className="text-sm">{text}</span>
   </li>
 );
 

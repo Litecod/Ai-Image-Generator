@@ -4,7 +4,8 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import logo from "@/public/logo.jpg";
 import { useContexts } from "@/context/AuthContext";
-import { useEffect, useState } from "react";
+import { setDoc, doc } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
 export default function LoginPage() {
   const { google, user, token, setToken } = useContexts();
@@ -13,10 +14,19 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await google();
+      if (user) {
+        await setDoc(doc(db, "Users", user.uid), {
+          email: user.email,
+          name: user.displayName,
+          subscription: ""
+        })
+        console.log("login successful")
+      }
       if (user?.uid) {
         setToken(user.uid);
         localStorage.setItem("token", user.uid);
       }
+
     } catch (error) {
       console.error("Google login error:", error);
     }

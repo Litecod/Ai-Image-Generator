@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import React from 'react';
@@ -7,21 +5,29 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { BsImageFill } from 'react-icons/bs';
+import { getConvertedImageURLFromBase64 } from '@/lib/image-conversion';
 
 type ImageFile = {
   file: File;
   previewUrl: string;
+  cartoonUrl?: string;
+  isGenerating?: boolean;
 };
 
 const GeneratePage = () => {
   const [images, setImages] = useState<ImageFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [spin, setSpin] = useState(false);
+  const [isGeneratingAll, setIsGeneratingAll] = useState(false);
 
   // Clean up object URLs when component unmounts
   useEffect(() => {
     return () => {
-      images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
+      images.forEach((image) => {
+        URL.revokeObjectURL(image.previewUrl);
+        if (image.cartoonUrl) {
+          URL.revokeObjectURL(image.cartoonUrl);
+        }
+      });
     };
   }, [images]);
 
@@ -30,6 +36,7 @@ const GeneratePage = () => {
       const newImages = Array.from(e.target.files).map((file) => ({
         file,
         previewUrl: URL.createObjectURL(file),
+        isGenerating: false,
       }));
 
       setImages((prev) => [...prev, ...newImages]);
@@ -40,39 +47,64 @@ const GeneratePage = () => {
   const removeImage = (index: number) => {
     const newImages = [...images];
     URL.revokeObjectURL(newImages[index].previewUrl);
+    if (newImages[index].cartoonUrl) {
+      URL.revokeObjectURL(newImages[index].cartoonUrl!);
+    }
     newImages.splice(index, 1);
     setImages(newImages);
   };
 
-  const handleUpload = async () => {
-    if (images.length === 0) return;
-
-    const formData = new FormData();
-    images.forEach((image) => {
-      formData.append('images', image.file);
-    });
+  const generateCartoon = async (index: number) => {
+    const image = images[index];
+    if (!image || image.isGenerating || image.cartoonUrl) return;
 
     try {
-      setSpin(true);
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      // Update the image state to show loading
+      setImages(prev => prev.map((img, i) => 
+        i === index ? { ...img, isGenerating: true } : img
+      ));
 
-      if (response.ok) {
-        alert('Upload successful!');
-        // Clear all images after successful upload
-        images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
-        setImages([]);
-      } else {
-        throw new Error('Upload failed');
-      }
+      // Convert image to base64
+      const base64Image = await fileToBase64(image.file);
+
+      // Call the conversion API
+      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image);
+
+      // Update the image with the cartoon URL
+      setImages(prev => prev.map((img, i) => 
+        i === index ? { ...img, cartoonUrl, isGenerating: false } : img
+      ));
     } catch (error) {
-      console.error('Error uploading images:', error);
-      alert('Upload failed. Please try again.');
-    } finally {
-      setSpin(false);
+      console.error('Error generating cartoon:', error);
+      setImages(prev => prev.map((img, i) => 
+        i === index ? { ...img, isGenerating: false } : img
+      ));
+      alert('Failed to generate cartoon. Please try again.');
     }
+  };
+
+  const generateAllCartoons = async () => {
+    if (images.length === 0 || isGeneratingAll) return;
+    
+    setIsGeneratingAll(true);
+    try {
+      for (let i = 0; i < images.length; i++) {
+        if (!images[i].cartoonUrl) {
+          await generateCartoon(i);
+        }
+      }
+    } finally {
+      setIsGeneratingAll(false);
+    }
+  };
+
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
   };
 
   return (
@@ -82,7 +114,7 @@ const GeneratePage = () => {
           <div className="w-full h-[13rem] sm:h-[16rem] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
             <BsImageFill className='mx-auto text-[3rem] font-light text-blue-900 mt-[2rem] sm:mt-[4rem]' />
             <div className="text-center">
-              <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to download</span> or Drag and Drop</p>
+              <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to upload</span> or Drag and Drop</p>
             </div>
           </div>
         </label>
@@ -96,27 +128,34 @@ const GeneratePage = () => {
           id='file'
         />
 
-        <div className={` absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "sm:mt-[16rem]" : "sm:mt-[13rem]"}`}>
+        <div className={`absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "sm:mt-[16rem]" : "sm:mt-[13rem]"}`}>
           <div className="flex gap-2 flex-wrap">
             {images.map((image, index) => (
               <div key={index} className="relative group">
                 <div className="w-[4rem] h-[4rem] rounded-xl overflow-hidden">
-                  <Image
-                    width={64}
-                    height={64}
-                    src={image.previewUrl}
-                    alt={`Preview ${index + 1}`}
-                    className="object-cover w-full h-full"
-                    onLoadingComplete={() => {
-                      setTimeout(() => {
-                        setSpin(true);
-                      }, 3000);
-                    }}
-                  />
-                  {!spin && (
-                    <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
-                      <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
-                    </div>
+                  {image.cartoonUrl ? (
+                    <Image
+                      width={64}
+                      height={64}
+                      src={image.cartoonUrl}
+                      alt={`Cartoon ${index + 1}`}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <>
+                      <Image
+                        width={64}
+                        height={64}
+                        src={image.previewUrl}
+                        alt={`Preview ${index + 1}`}
+                        className="object-cover w-full h-full"
+                      />
+                      {image.isGenerating && (
+                        <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
+                          <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
                 <button
@@ -125,6 +164,15 @@ const GeneratePage = () => {
                 >
                   x
                 </button>
+                {!image.cartoonUrl && !image.isGenerating && (
+                  <button
+                    onClick={() => generateCartoon(index)}
+                    className="absolute bottom-1 left-1 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                    title="Generate cartoon"
+                  >
+                    <HiOutlineSparkles className="text-xs" />
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -134,9 +182,13 @@ const GeneratePage = () => {
               <HiOutlineSparkles className="md:text-[1.5rem] star" />
             </div>
             <div className="bg-gradient-to-r from-[#8a40fc] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] rounded-[20rem] border-[2px] border-[#893dff] cursor-pointer">
-              <button onClick={handleUpload} className="border-animate w-full rounded-[20rem] cursor-pointer">
+              <button 
+                onClick={generateAllCartoons} 
+                className="border-animate w-full rounded-[20rem] cursor-pointer"
+                disabled={isGeneratingAll}
+              >
                 <div className="py-[0.3rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] text-[#fff] md:text-[1rem]">
-                  Generate
+                  {isGeneratingAll ? 'Generating...' : 'Generate All'}
                 </div>
               </button>
             </div>
@@ -145,6 +197,6 @@ const GeneratePage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default GeneratePage;
