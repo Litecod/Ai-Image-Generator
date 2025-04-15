@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import {getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBvNKo-fsiMXcHq83oKwCr22LQMX48dIc4",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
   authDomain: "cartoonify-3d-c7bd2.firebaseapp.com",
   projectId: "cartoonify-3d-c7bd2",
   storageBucket: "cartoonify-3d-c7bd2.firebasestorage.app",
@@ -12,6 +12,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app)
+export const db = getFirestore(app);
 export const auth = getAuth(app);
 export default app;
