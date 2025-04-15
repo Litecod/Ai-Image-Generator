@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { BsImageFill } from 'react-icons/bs';
 import { getConvertedImageURLFromBase64 } from '@/lib/image-conversion';
+import toast from 'react-hot-toast';
+import { downloadImage } from '@/lib/download';
 
 type ImageFile = {
   file: File;
@@ -18,6 +20,7 @@ const GeneratePage = () => {
   const [images, setImages] = useState<ImageFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
+  const [cartoon, setCartoon] = useState("")
 
   // Clean up object URLs when component unmounts
   useEffect(() => {
@@ -60,7 +63,7 @@ const GeneratePage = () => {
 
     try {
       // Update the image state to show loading
-      setImages(prev => prev.map((img, i) => 
+      setImages(prev => prev.map((img, i) =>
         i === index ? { ...img, isGenerating: true } : img
       ));
 
@@ -69,23 +72,25 @@ const GeneratePage = () => {
 
       // Call the conversion API
       const cartoonUrl = await getConvertedImageURLFromBase64(base64Image);
+      setCartoon(cartoonUrl)
 
       // Update the image with the cartoon URL
-      setImages(prev => prev.map((img, i) => 
+      setImages(prev => prev.map((img, i) =>
         i === index ? { ...img, cartoonUrl, isGenerating: false } : img
       ));
+      toast("loading")
     } catch (error) {
       console.error('Error generating cartoon:', error);
-      setImages(prev => prev.map((img, i) => 
+      setImages(prev => prev.map((img, i) =>
         i === index ? { ...img, isGenerating: false } : img
       ));
-      alert('Failed to generate cartoon. Please try again.');
+      toast('Failed to generate cartoon. Please try again.');
     }
   };
 
   const generateAllCartoons = async () => {
     if (images.length === 0 || isGeneratingAll) return;
-    
+
     setIsGeneratingAll(true);
     try {
       for (let i = 0; i < images.length; i++) {
@@ -110,13 +115,28 @@ const GeneratePage = () => {
   return (
     <div className="relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[0rem] pt-[15rem] sm:pt-[2rem] bg-gray-100 rounded-xl h-screen sm:h-auto">
       <div className="container mx-auto sm:p-4 ">
+        {cartoon === "" ? "" : (
+          <button
+            onClick={() => downloadImage(cartoon!, `cartoon.png`)}
+            className="absolute top-0 left-1 bg-green-600 text-white rounded-full w-5 h-5 flex items-center justify-center"
+            title="Download cartoon"
+          >
+            Download Image
+          </button>
+        )}
         <label htmlFor='file' className='mx-auto block'>
-          <div className="w-full h-[13rem] sm:h-[16rem] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
+          {cartoon === "" ? <div className="w-full h-[13rem] sm:h-[16rem] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
             <BsImageFill className='mx-auto text-[3rem] font-light text-blue-900 mt-[2rem] sm:mt-[4rem]' />
             <div className="text-center">
               <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to upload</span> or Drag and Drop</p>
             </div>
-          </div>
+          </div> : <div>
+            <img
+              src={cartoon}
+              alt={`Cartoon`}
+              className=" w-full h-[20rem] max-w-[20rem] mx-auto rounded-xl"
+            />
+          </div>}
         </label>
         <input
           type="file"
@@ -130,60 +150,63 @@ const GeneratePage = () => {
 
         <div className={`absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "sm:mt-[16rem]" : "sm:mt-[13rem]"}`}>
           <div className="flex gap-2 flex-wrap">
-            {images.map((image, index) => (
-              <div key={index} className="relative group">
-                <div className="w-[4rem] h-[4rem] rounded-xl overflow-hidden">
-                  {image.cartoonUrl ? (
-                    <Image
-                      width={64}
-                      height={64}
-                      src={image.cartoonUrl}
-                      alt={`Cartoon ${index + 1}`}
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <>
+            {images.map((image, index) => {
+              console.log(image.previewUrl)
+              return (
+                <div key={index} className="relative group">
+                  <div className="w-[4rem] h-[4rem] rounded-xl overflow-hidden">
+                    {image.cartoonUrl ? (
                       <Image
                         width={64}
                         height={64}
-                        src={image.previewUrl}
-                        alt={`Preview ${index + 1}`}
+                        src={image.cartoonUrl}
+                        alt={`Cartoon ${index + 1}`}
                         className="object-cover w-full h-full"
                       />
-                      {image.isGenerating && (
-                        <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
-                          <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
-                        </div>
-                      )}
-                    </>
+                    ) : (
+                      <>
+                        <Image
+                          width={64}
+                          height={64}
+                          src={image.previewUrl}
+                          alt={`Preview ${index + 1}`}
+                          className="object-cover w-full h-full"
+                        />
+                        {image.isGenerating && (
+                          <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
+                            <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => removeImage(index)}
+                    className="absolute top-1 right-1 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                  >
+                    x
+                  </button>
+                  {!image.cartoonUrl && !image.isGenerating && (
+                    <button
+                      onClick={() => generateCartoon(index)}
+                      className="absolute bottom-1 left-1 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                      title="Generate cartoon"
+                    >
+                      <HiOutlineSparkles className="text-xs" />
+                    </button>
                   )}
                 </div>
-                <button
-                  onClick={() => removeImage(index)}
-                  className="absolute top-1 right-1 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
-                >
-                  x
-                </button>
-                {!image.cartoonUrl && !image.isGenerating && (
-                  <button
-                    onClick={() => generateCartoon(index)}
-                    className="absolute bottom-1 left-1 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
-                    title="Generate cartoon"
-                  >
-                    <HiOutlineSparkles className="text-xs" />
-                  </button>
-                )}
-              </div>
-            ))}
+              )
+            })}
           </div>
 
           <div className="flex justify-between items-center mt-[0.8rem]">
-            <div className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200">
+            <div onClick={generateAllCartoons} className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200">
               <HiOutlineSparkles className="md:text-[1.5rem] star" />
             </div>
             <div className="bg-gradient-to-r from-[#8a40fc] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] rounded-[20rem] border-[2px] border-[#893dff] cursor-pointer">
-              <button 
-                onClick={generateAllCartoons} 
+              <button
+                onClick={generateAllCartoons}
                 className="border-animate w-full rounded-[20rem] cursor-pointer"
                 disabled={isGeneratingAll}
               >

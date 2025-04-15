@@ -22,7 +22,7 @@ async function getImageDetails(base64Image: string) {
         Authorization: `Bearer ${apiKeyRef.value}`,
       },
       body: JSON.stringify({
-        model: "gpt-4-vision-preview",
+        model: "gpt-4o-mini",
         max_tokens: 4096,
         temperature: 0,
         messages: [
