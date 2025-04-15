@@ -8,7 +8,7 @@ import { setDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
 export default function LoginPage() {
-  const { google, user, token, setToken } = useContexts();
+  const { google, user } = useContexts();
 
   const googleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -23,7 +23,6 @@ export default function LoginPage() {
         console.log("login successful")
       }
       if (user?.uid) {
-        setToken(user.uid);
         localStorage.setItem("token", user.uid);
       }
 

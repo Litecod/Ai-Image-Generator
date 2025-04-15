@@ -10,7 +10,7 @@ const NavSide: React.FC = () => {
   const [click, setClick] = useState<boolean>(false);
   const { token } = useContexts();
 
-  const isAuthenticated = token !== "" || Boolean(localStorage.getItem("token"));
+  const isAuthenticated = token !== "";
 
   return (
     <div>

@@ -24,7 +24,7 @@ type PricePeriod = "weekly" | "monthly" | "yearly";
 
 const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
-  const [price, setPrice] = useState<PricePlan[]>(priceOne);
+  const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
   const { user } = useContexts(); // Get current user from your auth context
 

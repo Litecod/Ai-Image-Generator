@@ -1,12 +1,12 @@
 "use client"
 
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
-import { 
-  GoogleAuthProvider, 
-  signInWithPopup, 
-  onAuthStateChanged, 
-  UserCredential, 
-  User 
+import React, { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  UserCredential,
+  User
 } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 
@@ -14,7 +14,7 @@ type AuthContextType = {
   google: () => Promise<UserCredential>;
   user: User | null;
   token: string;
-  setToken: React.Dispatch<React.SetStateAction<string>>;
+  setToken: React.Dispatch<SetStateAction<string>>
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +27,13 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);
   };
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (!token && storedToken !== null) {
+      setToken(storedToken);
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
