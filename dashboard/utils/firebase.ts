@@ -2,8 +2,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY || ""
+
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
+  apiKey: apiKey,
   authDomain: "cartoonify-3d-c7bd2.firebaseapp.com",
   projectId: "cartoonify-3d-c7bd2",
   storageBucket: "cartoonify-3d-c7bd2.firebasestorage.app",

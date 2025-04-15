@@ -14,6 +14,9 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await google();
+      if (user?.uid) {
+        localStorage.setItem("token", user.uid);
+      }
       if (user) {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
@@ -22,9 +25,7 @@ export default function LoginPage() {
         })
         console.log("login successful")
       }
-      if (user?.uid) {
-        localStorage.setItem("token", user.uid);
-      }
+
 
     } catch (error) {
       console.error("Google login error:", error);
