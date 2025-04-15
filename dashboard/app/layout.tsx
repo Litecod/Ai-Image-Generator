@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NavSide from "@/components/NavSide";
+import AuthContextProvider from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +19,13 @@ export default function RootLayout({
         className=" bg-[#fff] text-[#000] sm:overflow-hidden"
       >
         {/* flex w-full gap-[1rem] pt-[3.2rem] md:pt-[4rem] */}
-        <NavSide />
-        <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl sm:pt-[5rem] sm:overflow-y-scroll sm:h-screen">
-          {children}
-        </div>
+        <AuthContextProvider>
+          <NavSide />
+          <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl sm:pt-[5rem] sm:overflow-y-scroll sm:h-screen">
+            {children}
+          </div>
 
+        </AuthContextProvider>
 
       </body>
     </html>

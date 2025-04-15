@@ -1,17 +1,33 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import Navbar from './Navbar'
-import Sidebar from './Sidebar'
+import React, { useState } from 'react';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import LoginPage from './Login';
+import { useContexts } from '@/context/AuthContext';
 
-const NavSide = () => {
-    const [click, setClick] = useState(false)
+const NavSide: React.FC = () => {
+  const [click, setClick] = useState<boolean>(false);
+  const { token } = useContexts();
+
+  const isAuthenticated = token !== "" || Boolean(localStorage.getItem("token"));
+
   return (
     <div>
-        <Navbar setClick={setClick}/>
-        <Sidebar click={click}/>
+      {!isAuthenticated ? (
+        <div>
+          <LoginPage />
+          <Navbar setClick={setClick} />
+          <Sidebar click={click} />
+        </div>
+      ) : (
+        <div>
+          <Navbar setClick={setClick} />
+          <Sidebar click={click} />
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default NavSide
+export default NavSide;
