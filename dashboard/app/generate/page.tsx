@@ -113,7 +113,7 @@ const GeneratePage = () => {
   };
 
   return (
-    <div className="relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[0rem] pt-[15rem] sm:pt-[2rem] bg-gray-100 rounded-xl h-screen sm:h-auto">
+    <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[0rem] sm:pt-[2rem] bg-gray-100 rounded-xl h-screen sm:h-auto ${cartoon !== "" ? "pt-[8rem]" : "pt-[13rem]"}`}>
       <div className="container mx-auto sm:p-4 ">
         {cartoon === "" ? "" : (
           <button
@@ -134,7 +134,7 @@ const GeneratePage = () => {
             <img
               src={cartoon}
               alt={`Cartoon`}
-              className=" w-full h-[20rem] max-w-[20rem] mx-auto rounded-xl"
+              className=" w-full object-cover h-[25rem] max-w-[30rem]  mx-auto rounded-xl"
             />
           </div>}
         </label>
@@ -148,37 +148,25 @@ const GeneratePage = () => {
           id='file'
         />
 
-        <div className={`absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? "sm:mt-[16rem]" : "sm:mt-[13rem]"}`}>
+        <div className={`absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? `${cartoon === "" ? "sm:mt-[16rem]" : "sm:mt-[11rem]"}` : `${cartoon === "" ? "sm:mt-[13rem]" : "sm:mt-[8rem]"}`} `}>
           <div className="flex gap-2 flex-wrap">
             {images.map((image, index) => {
               console.log(image.previewUrl)
               return (
                 <div key={index} className="relative group">
                   <div className="w-[4rem] h-[4rem] rounded-xl overflow-hidden">
-                    {image.cartoonUrl ? (
-                      <Image
-                        width={64}
-                        height={64}
-                        src={image.cartoonUrl}
-                        alt={`Cartoon ${index + 1}`}
+                    <>
+                      <img
+                        src={image.previewUrl}
+                        alt={`Preview ${index + 1}`}
                         className="object-cover w-full h-full"
                       />
-                    ) : (
-                      <>
-                        <Image
-                          width={64}
-                          height={64}
-                          src={image.previewUrl}
-                          alt={`Preview ${index + 1}`}
-                          className="object-cover w-full h-full"
-                        />
-                        {image.isGenerating && (
-                          <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
-                            <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
-                          </div>
-                        )}
-                      </>
-                    )}
+                      {image.isGenerating && (
+                        <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
+                          <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
+                        </div>
+                      )}
+                    </>
                   </div>
                   <button
                     onClick={() => removeImage(index)}

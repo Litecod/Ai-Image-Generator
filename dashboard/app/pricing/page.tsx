@@ -48,7 +48,7 @@ const Pricing = () => {
       return;
     }
 
-    console.log(price)
+    console.log(plan.price)
 
     setLoading(true);
     try {
