@@ -10,7 +10,7 @@ const Navbar = () => {
           <Image src={logo} alt="" className="w-[2.5rem] sm:w-[3rem] h-[2.5rem] sm:h-[3rem] rounded-full" />
           <p className="text-[1.3rem] sm:text-[1.7rem] logo font-medium">Cartoonify 3D</p>
         </div>
-        <Link className="rounded-xl bg-[#000] border border-[#ffffff3e] px-[1.5rem] py-[0.5rem] hover:bg-gray-900 duration-150" href="http://localhost:3001" >login</Link>
+        <Link className="rounded-xl bg-[#000] border border-[#ffffff3e] px-[1.5rem] py-[0.5rem] hover:bg-gray-900 duration-150" href="https://ai-image-generator-dasboard.vercel.app" >login</Link>
       </div>
     </div>
   )
