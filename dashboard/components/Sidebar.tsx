@@ -8,12 +8,17 @@ import Image from 'next/image'
 import img from "@/public/010.jpg"
 import imgTwo from "@/public/020.jpg"
 import imgOne from "@/public/000.jpg"
+import { useContexts } from '@/context/AuthContext'
 
 
 interface NavbarProps {
     click?: boolean;
-  }
-const Sidebar = ({click}:NavbarProps) => {
+}
+
+
+
+const Sidebar = ({ click }: NavbarProps) => {
+    const { fetchUser } = useContexts();
     const pathname = usePathname()
     return (
         <div className={`fixed w-full sm:w-[20%] md:w-[30%] lg:w-[17%] max-h-screen bg-gray-50 sm:absolute pt-[5rem] z-10 overflow-x-hidden duration-150 ${click === false ? "mt-[-180px] sm:mt-0 opacity-0 sm:opacity-100" : "opacity-100 mt-0"}`}>
@@ -27,16 +32,16 @@ const Sidebar = ({click}:NavbarProps) => {
                 </Link>
                 <div className="md:flex flex-col gap-7 mt-[1rem] hidden">
                     <div className="flex gap-2">
-                    <Image src={img} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
-                    <Image src={imgTwo} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
+                        <Image onClick={() => fetchUser()} src={img} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
+                        <Image src={imgTwo} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
                     </div>
                     <div className="flex gap-2">
-                    <Image src={imgOne} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
-                    <Image src={img} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
+                        <Image src={imgOne} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
+                        <Image src={img} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
                     </div>
                     <div className="flex gap-2">
-                    <Image src={imgTwo} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
-                    <Image src={imgOne} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
+                        <Image src={imgTwo} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
+                        <Image src={imgOne} alt='Image' className='w-[7rem] h-[8rem] rounded-xl cursor-pointer md:object-cover' />
                     </div>
                 </div>
             </div>

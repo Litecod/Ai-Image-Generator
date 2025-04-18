@@ -2,15 +2,15 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyBvNKo-fsiMXcHq83oKwCr22LQMX48dIc4"
+const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyCA340GgyECPoLKjFnTgVLPannWyLw_GIY"
 
 const firebaseConfig = {
-  apiKey: apiKey,
-  authDomain: "cartoonify-3d-c7bd2.firebaseapp.com",
-  projectId: "cartoonify-3d-c7bd2",
-  storageBucket: "cartoonify-3d-c7bd2.firebasestorage.app",
-  messagingSenderId: "368671595831",
-  appId: "1:368671595831:web:95969531735abbed874eb2",
+  apiKey: "AIzaSyCA340GgyECPoLKjFnTgVLPannWyLw_GIY",
+  authDomain: "cartoonify-3d.firebaseapp.com",
+  projectId: "cartoonify-3d",
+  storageBucket: "cartoonify-3d.firebasestorage.app",
+  messagingSenderId: "347736606258",
+  appId: "1:347736606258:web:b7a4cf0e7f0a1bb2011e2b"
 };
 
 const app = initializeApp(firebaseConfig);

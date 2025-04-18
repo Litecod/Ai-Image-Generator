@@ -3,9 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { priceOne, priceTwo, priceThree } from '@/data/price';
-import { db } from '@/utils/firebase'; // Import your Firebase config
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useContexts } from '@/context/AuthContext';
+import axios from 'axios';
 
 type PricePlan = {
   name: string;
@@ -17,7 +16,7 @@ type PricePlan = {
   piority: string;
   style: string;
   higher: string;
-  period: PricePeriod; // Added period to the type
+  period: PricePeriod;
 };
 
 type PricePeriod = "weekly" | "monthly" | "yearly";
@@ -26,7 +25,7 @@ const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
   const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const { user } = useContexts(); // Get current user from your auth context
+  const { user, backendUrl, token } = useContexts();
 
   useEffect(() => {
     if (priceTag === "yearly") {
@@ -48,34 +47,43 @@ const Pricing = () => {
       return;
     }
 
-    console.log(plan.price)
+
+    const subscriptionData = {
+      plan: plan.name,
+      price: plan.price,
+      period: plan.period,
+      credits: plan.credit,
+      image: plan.image,
+      startDate: new Date(),
+      status: 'active',
+      isTrial: true
+    }
+
+    console.log(subscriptionData)
 
     setLoading(true);
     try {
-      await addDoc(collection(db, "subscriptions"), {
-        userId: user.uid,
-        plan: plan.name,
-        price: plan.price,
-        period: plan.period,
-        credits: plan.credit,
-        createdAt: serverTimestamp(),
-        status: "pending" 
-      });
-
-      alert(`Successfully subscribed to ${plan.name} plan!`);
-      // Here you might want to redirect to payment page or dashboard
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${backendUrl}/api/user/subscription`,
+        subscriptionData,
+        {
+          headers: { token },
+        }
+      );
+      if (response.data) {
+        console.log(response.data)
+      }
+      return response.data;
     } catch (error) {
-      console.error("Error subscribing:", error);
-      alert("Error subscribing. Please try again.");
-    } finally {
-      setLoading(false);
+      console.error('Subscription error:', error);
+      throw error;
     }
   };
 
   return (
     <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[2rem] bg-gray-100 rounded-xl min-h-screen'>
       <div className="max-w-6xl mx-auto">
-        {/* Pricing period selector */}
         <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth text-white">
           {(["weekly", "monthly", "yearly"] as PricePeriod[]).map((period) => (
             <button

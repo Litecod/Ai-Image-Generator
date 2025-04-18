@@ -1,16 +1,21 @@
+import { useContexts } from "@/context/AuthContext";
+
 const OPEN_AI_SYSTEM_PROMPT = `You are an expert image analyst. You can extract accurate information from an image.
 Your Job is to accept an image which can be a photo of a human and respond with as much details as you can.
-Give additional details about facial expression, shape of specs if person has wore specs, pose of the person, hair style, type and color of outfit, hand expression, type of beard person has if one has, details about facial anatomy, color of skin, camera angle, how much of a person is visible`
+Give additional details about facial expression, shape of specs if person has wore specs, pose of the person, hair style, type and color of outfit, hand expression, type of beard person has if one has, details about facial anatomy, color of skin, camera angle, how much of a person is visible`;
 
-const OPENAI_USER_PROMPT = 'Here is an image. Analyze carefully and give me the details'
+const OPENAI_USER_PROMPT =
+  "Here is an image. Analyze carefully and give me the details";
 
-const prefix = 'Create a 3D rendered image of a stylized cartoon character based on following prompt'
+const prefix =
+  "Create a 3D rendered image of a stylized cartoon character based on following prompt";
 
 export const promptComplete = false;
 export const apiKeyRef = {
-  value:
-    process.env.NEXT_PUBLIC_OPENAI_API_KEY || ""
+  value: process.env.NEXT_PUBLIC_OPENAI_API_KEY || "",
 };
+
+const { imageGen } = useContexts();
 
 async function getImageDetails(base64Image: string) {
   const promptResponse = await fetch(
@@ -23,7 +28,7 @@ async function getImageDetails(base64Image: string) {
       },
       body: JSON.stringify({
         model: "gpt-4o-mini",
-        max_tokens: 4096,
+        max_tokens: imageGen,
         temperature: 0,
         messages: [
           {
