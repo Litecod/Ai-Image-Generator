@@ -5,6 +5,8 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+const currency = "usd";
+
 const google = async (req, res) => {
   const { username, email, subscription } = req.body;
 
@@ -51,7 +53,7 @@ const google = async (req, res) => {
         price: 0,
         period: "",
         credits: "",
-        image: 0,
+        image: 5,
         startDate: new Date(),
         status: "inactive",
         isTrial: true,
@@ -170,13 +172,82 @@ const getUser = async (req, res) => {
   }
 };
 
-const verifyStripe = async (req, res) => {
-  const {subscription} = req.body
-  const subscribes = subscription.map((subscribe) => ({
-    price_Data: {
-      currency: currency,
-    },
-  }))
+// Create Stripe Checkout Session
+const PlaceOrderStripe = async (req, res) => {
+  try {
+    const { userId, plan, price, period, credits, image } = req.body;
+    const { origin } = req.headers;
+
+    const subscriptionData = {
+      plan,
+      price,
+      period,
+      credits,
+      image,
+      startDate: new Date(),
+      endDate: calculateEndDate(period),
+      status: "active",
+      isTrial: false,
+    };
+
+    const line_items = [
+      {
+        price_data: {
+          currency: currency,
+          product_data: {
+            name: period + " " + " " + plan,
+          },
+          unit_amount: price * 100,
+        },
+        quantity: 1,
+      },
+    ];
+
+    // line_items.push({
+    //   price_data: {
+    //     currency: currency,
+    //     product_data: {
+    //       name: item.plan,
+    //     },
+    //     unit_amount: item.price * 100,
+    //   },
+    //   quantity: 1,
+    // });
+
+    const session = await stripe.checkout.sessions.create({
+      success_url: "http://localhost:3000/payment-success",
+      cancel_url: "http://localhost:3000/payment-cancel",
+      line_items,
+      mode: "payment",
+    });
+
+    if (session) {
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userId,
+        {
+          $set: {
+            subscription: subscriptionData,
+            updatedAt: new Date(),
+          },
+        },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+    }
+
+    res.json({ success: true, session_url: session.url });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
 };
 
-export { google, addSubscription, getUser, verifyStripe };
+const verifyStripe = async (req, res) => {};
+
+export { google, addSubscription, getUser, PlaceOrderStripe, verifyStripe };

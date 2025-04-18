@@ -1,4 +1,3 @@
-import { useContexts } from "@/context/AuthContext";
 
 const OPEN_AI_SYSTEM_PROMPT = `You are an expert image analyst. You can extract accurate information from an image.
 Your Job is to accept an image which can be a photo of a human and respond with as much details as you can.
@@ -15,9 +14,7 @@ export const apiKeyRef = {
   value: process.env.NEXT_PUBLIC_OPENAI_API_KEY || "",
 };
 
-const { imageGen } = useContexts();
-
-async function getImageDetails(base64Image: string) {
+const getImageDetails = async (base64Image: string, imageGen: number) => {
   const promptResponse = await fetch(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -61,7 +58,7 @@ async function getImageDetails(base64Image: string) {
     throw new Error(promptResponseJSON?.error?.message);
   }
   return promptResponseJSON.choices[0].message.content;
-}
+};
 
 async function generateImage(prompt: string) {
   const imageGenerationResponse = await fetch(
@@ -88,8 +85,8 @@ async function generateImage(prompt: string) {
   return imageGenerationResponseJSON.data[0].url;
 }
 
-export async function getConvertedImageURLFromBase64(base64Image: string) {
-  const imageDetails = await getImageDetails(base64Image);
+export async function getConvertedImageURLFromBase64(base64Image: string, imageGen: number) {
+  const imageDetails = await getImageDetails(base64Image, imageGen);
   const imagePrompt = prefix + "\n\n" + imageDetails;
   const imageUrl = await generateImage(imagePrompt);
   return imageUrl;

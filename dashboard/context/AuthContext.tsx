@@ -18,7 +18,8 @@ type AuthContextType = {
   token: string;
   setToken: React.Dispatch<SetStateAction<string>>;
   backendUrl: string,
-  imageGen: number
+  imageGen: number,
+  userId: string
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,7 +28,49 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string>("");
   const [imageGen, setImageGen] = useState<number>(0);
+  const [userId, setUserId] = useState("")
   const backendUrl = "http://localhost:4800"
+
+
+    useEffect(() => {
+      const handleRefresh = () => {
+        console.log('App refreshed or loaded');
+        fetchUser();
+      };
+      handleRefresh();
+      const beforeUnloadHandler = () => {
+        console.log('User is refreshing the page');
+      };
+  
+      window.addEventListener('beforeunload', beforeUnloadHandler);
+  
+      return () => {
+        window.removeEventListener('beforeunload', beforeUnloadHandler);
+      };
+    }, [])
+
+
+  const fetchUser = async () => {
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${backendUrl}/api/user/getUsers`, {},
+        {
+          headers: { token },
+        }
+      );
+      if (response.data.success) {
+        setImageGen(response.data.userInfo.subscription.image)
+        setUserId(response.data.userInfo._id)
+        console.log(response.data)
+      }
+      return response.data;
+    } catch (error) {
+      console.error('Unexpected error:', error);
+    }
+  };
+
 
   const google = async (): Promise<void> => {
     const googleAuthProvider = new GoogleAuthProvider();
@@ -54,6 +97,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
         setToken(data.token);
+        fetchUser()
       } else {
         localStorage.removeItem("token");
         setToken("");
@@ -63,24 +107,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const fetchUser = async () => {
-
-    try {
-      const token = localStorage.getItem('token'); 
-      const response = await axios.post(
-        `${backendUrl}/api/user/getUsers`,{},
-        {
-          headers: { token },
-        }
-      );
-      if (response.data.success) {
-        setImageGen(response.data.userInfo.subscription.image)
-      }
-      return response.data;
-    } catch (error) {
-      console.error('Unexpected error:', error);
-    }
-  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -106,7 +132,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setToken,
     backendUrl,
     fetchUser,
-    imageGen
+    imageGen,
+    userId
   };
 
   return (

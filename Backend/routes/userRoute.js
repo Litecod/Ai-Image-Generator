@@ -1,8 +1,13 @@
 import express from "express";
-import { google, addSubscription, getUser } from "../controllers/userController.js"; 
+import { google, addSubscription, getUser, verifyStripe, PlaceOrderStripe } from "../controllers/userController.js"; 
 import authUser from "../middleware/auth.js";
 
 const UserRouter = express.Router();
+
+
+//Stripe paynment 
+UserRouter.post("/verifyStripe", authUser, verifyStripe);
+UserRouter.post("/placeOrderStripe", authUser, PlaceOrderStripe)
 
 
 UserRouter.post('/google', google);

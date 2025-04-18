@@ -6,8 +6,9 @@ import Image from 'next/image';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { BsImageFill } from 'react-icons/bs';
 import { getConvertedImageURLFromBase64 } from '@/lib/image-conversion';
-import toast from 'react-hot-toast';
+import toast, { ToastBar } from 'react-hot-toast';
 import { downloadImage } from '@/lib/download';
+import { useContexts } from '@/context/AuthContext';
 
 type ImageFile = {
   file: File;
@@ -21,6 +22,7 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
+  const { imageGen, fetchUser } = useContexts()
 
   // Clean up object URLs when component unmounts
   useEffect(() => {
@@ -58,6 +60,7 @@ const GeneratePage = () => {
   };
 
   const generateCartoon = async (index: number) => {
+    fetchUser()
     const image = images[index];
     if (!image || image.isGenerating || image.cartoonUrl) return;
 
@@ -71,7 +74,7 @@ const GeneratePage = () => {
       const base64Image = await fileToBase64(image.file);
 
       // Call the conversion API
-      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image);
+      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image, imageGen);
       setCartoon(cartoonUrl)
 
       // Update the image with the cartoon URL
@@ -89,6 +92,10 @@ const GeneratePage = () => {
   };
 
   const generateAllCartoons = async () => {
+    fetchUser()
+    if (imageGen === 0) {
+      toast.error("Purchase Your Subscription to Generate")
+    }
     if (images.length === 0 || isGeneratingAll) return;
 
     setIsGeneratingAll(true);

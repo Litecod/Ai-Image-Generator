@@ -5,6 +5,7 @@ import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { priceOne, priceTwo, priceThree } from '@/data/price';
 import { useContexts } from '@/context/AuthContext';
 import axios from 'axios';
+import { loadStripe } from "@stripe/stripe-js"
 
 type PricePlan = {
   name: string;
@@ -25,7 +26,8 @@ const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
   const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const { user, backendUrl, token } = useContexts();
+  const { user, backendUrl, token, userId, fetchUser } = useContexts();
+
 
   useEffect(() => {
     if (priceTag === "yearly") {
@@ -41,12 +43,7 @@ const Pricing = () => {
     setPriceTag(period);
   };
 
-  const handleSubscribe = async (plan: PricePlan) => {
-    if (!user) {
-      alert("Please sign in to subscribe");
-      return;
-    }
-
+  const addsubscription = async (plan: PricePlan) => {
 
     const subscriptionData = {
       plan: plan.name,
@@ -59,9 +56,6 @@ const Pricing = () => {
       isTrial: true
     }
 
-    console.log(subscriptionData)
-
-    setLoading(true);
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
@@ -79,8 +73,41 @@ const Pricing = () => {
       console.error('Subscription error:', error);
       throw error;
     }
-  };
+  }
 
+  const handleSubscribe = async (plan: PricePlan) => {
+    fetchUser()
+    if (!user) {
+      alert("Please sign in to subscribe");
+      return;
+    }
+
+    console.log(plan)
+
+    const subscriptionData = {
+      plan: plan.name,
+      price: plan.price,
+      period: plan.period,
+      credits: plan.credit,
+      image: plan.image,
+      startDate: new Date(),
+      status: 'active',
+      isTrial: true
+    }
+
+    try {
+      const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+      if(response.data.success) {
+        const {session_url} = response.data
+        window.location.replace(session_url)
+      }else {
+        console.log(response.data.message)
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      console.log(userId)
+    }
+  }
   return (
     <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[2rem] bg-gray-100 rounded-xl min-h-screen'>
       <div className="max-w-6xl mx-auto">
