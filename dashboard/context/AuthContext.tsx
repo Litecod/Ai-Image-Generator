@@ -29,7 +29,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string>("");
   const [imageGen, setImageGen] = useState<number>(0);
   const [userId, setUserId] = useState("")
-  const backendUrl = "https://ai-image-generator-backend-two.vercel.app/"
+  const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
 
 
     useEffect(() => {
