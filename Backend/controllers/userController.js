@@ -215,8 +215,8 @@ const PlaceOrderStripe = async (req, res) => {
     // });
 
     const session = await stripe.checkout.sessions.create({
-      success_url: "http://localhost:3000/payment-success",
-      cancel_url: "http://localhost:3000/payment-cancel",
+      success_url: "https://ai-image-generator-dasboard.vercel.app/payment-success",
+      cancel_url: "https://ai-image-generator-dasboard.vercel.app/payment-cancel",
       line_items,
       mode: "payment",
     });
