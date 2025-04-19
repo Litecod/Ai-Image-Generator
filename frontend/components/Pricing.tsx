@@ -25,10 +25,10 @@ const Pricing = () => {
 
 
     return (
-        <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] mt-[5rem] mb-[2rem]'>
+        <div className='px-[0.8rem] md:px-[2rem] lg:px-[3rem] pt-[5rem] mb-[2rem] max-w-[90rem] bg-[url(../public/download.png)] mx-auto'>
             <div className="">
                 <Header icons={MdOutlinePriceChange} details={"Our Pricing"} clas=''/>
-                <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[25rem] mx-auto'>Get Started with ImagineArt</h2>
+                <h2 className='head text-[2rem] md:text-[3rem] text-center lg:max-w-[25rem] mx-auto font-medium'>Get Started with Cartoonify 3D</h2>
                 <div className="mt-[4rem]">
                     <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth">
                         <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "weekly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("weekly")}>Weekly</p>

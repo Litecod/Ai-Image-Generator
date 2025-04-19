@@ -120,95 +120,97 @@ const GeneratePage = () => {
   };
 
   return (
-    <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[0rem] sm:pt-[2rem] bg-gray-100 rounded-xl h-screen sm:h-auto ${cartoon !== "" ? "pt-[8rem]" : "pt-[13rem]"}`}>
-      <div className="container mx-auto sm:p-4 ">
-        {cartoon === "" ? "" : (
-          <button
-            onClick={() => downloadImage(cartoon!, `cartoon.png`)}
-            className="absolute top-0 left-1 bg-green-600 text-white rounded-full w-5 h-5 flex items-center justify-center"
-            title="Download cartoon"
-          >
-            Download Image
-          </button>
-        )}
-        <label htmlFor='file' className='mx-auto block'>
-          {cartoon === "" ? <div className="w-full h-[13rem] sm:h-[16rem] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
-            <BsImageFill className='mx-auto text-[3rem] font-light text-blue-900 mt-[2rem] sm:mt-[4rem]' />
-            <div className="text-center">
-              <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to upload</span> or Drag and Drop</p>
-            </div>
-          </div> : <div>
-            <img
-              src={cartoon}
-              alt={`Cartoon`}
-              className=" w-full object-cover h-[25rem] max-w-[30rem]  mx-auto rounded-xl"
-            />
-          </div>}
-        </label>
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          accept="image/*"
-          multiple
-          className="hidden"
-          id='file'
-        />
+    <div className={`sm:pt-[5rem] min-h-screen h-screen ${cartoon !== "" ? "pt-[8rem]" : "pt-[13rem]"}`}>
+      <div className="relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gray-100 rounded-xl h-full">
+        <div className="container mx-auto sm:p-4 h-full sm:pt-[4rem]">
+          {cartoon === "" ? "" : (
+            <button
+              onClick={() => downloadImage(cartoon!, `cartoon.png`)}
+              className="absolute top-0 left-1 bg-green-600 text-white rounded-full w-5 h-5 flex items-center justify-center"
+              title="Download cartoon"
+            >
+              Download Image
+            </button>
+          )}
+          <label htmlFor='file' className='mx-auto block h-full'>
+            {cartoon === "" ? <div className="w-full h-[13rem] sm:h-[50%] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
+              <BsImageFill className='mx-auto text-[3rem] font-light text-blue-900 mt-[2rem] sm:mt-[4rem]' />
+              <div className="text-center">
+                <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to upload</span> or Drag and Drop</p>
+              </div>
+            </div> : <div>
+              <img
+                src={cartoon}
+                alt={`Cartoon`}
+                className=" w-full object-cover h-[25rem] max-w-[30rem]  mx-auto rounded-xl"
+              />
+            </div>}
+          </label>
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            multiple
+            className="hidden"
+            id='file'
+          />
 
-        <div className={`absolute bottom-[1rem] sm:relative p-[0.6rem] px-[1rem] items-center w-[92%] sm:w-full bg-white rounded-2xl mx-auto ${images.length === 0 ? `${cartoon === "" ? "sm:mt-[16rem]" : "sm:mt-[11rem]"}` : `${cartoon === "" ? "sm:mt-[13rem]" : "sm:mt-[8rem]"}`} `}>
-          <div className="flex gap-2 flex-wrap">
-            {images.map((image, index) => {
-              console.log(image.previewUrl)
-              return (
-                <div key={index} className="relative group">
-                  <div className="w-[4rem] h-[4rem] rounded-xl overflow-hidden">
-                    <>
-                      <img
-                        src={image.previewUrl}
-                        alt={`Preview ${index + 1}`}
-                        className="object-cover w-full h-full"
-                      />
-                      {image.isGenerating && (
-                        <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
-                          <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
-                        </div>
-                      )}
-                    </>
-                  </div>
-                  <button
-                    onClick={() => removeImage(index)}
-                    className="absolute top-1 right-1 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
-                  >
-                    x
-                  </button>
-                  {!image.cartoonUrl && !image.isGenerating && (
+          <div className={`absolute bottom-[1rem] sm:bottom-[2rem]  p-[0.6rem] px-[1rem] items-center w-[94%] sm:w-[87%] lg:w-[92%] bg-white rounded-2xl mx-auto ${images.length === 0 ? `${cartoon === "" ? "sm:mt-[16rem]" : "sm:mt-[11rem]"}` : `${cartoon === "" ? "sm:mt-[13rem]" : "sm:mt-[8rem]"}`} `}>
+            <div className="flex gap-2 flex-wrap">
+              {images.map((image, index) => {
+                console.log(image.previewUrl)
+                return (
+                  <div key={index} className="relative group">
+                    <div className="w-[4rem] h-[4rem] rounded-xl overflow-hidden">
+                      <>
+                        <img
+                          src={image.previewUrl}
+                          alt={`Preview ${index + 1}`}
+                          className="object-cover w-full h-full"
+                        />
+                        {image.isGenerating && (
+                          <div className="absolute inset-0 flex justify-center items-center bg-black/30 rounded-xl">
+                            <div className="w-5 h-5 border-2 border-l-transparent border-white rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                      </>
+                    </div>
                     <button
-                      onClick={() => generateCartoon(index)}
-                      className="absolute bottom-1 left-1 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
-                      title="Generate cartoon"
+                      onClick={() => removeImage(index)}
+                      className="absolute top-1 right-1 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
                     >
-                      <HiOutlineSparkles className="text-xs" />
+                      x
                     </button>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="flex justify-between items-center mt-[0.8rem]">
-            <div onClick={generateAllCartoons} className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200">
-              <HiOutlineSparkles className="md:text-[1.5rem] star" />
+                    {!image.cartoonUrl && !image.isGenerating && (
+                      <button
+                        onClick={() => generateCartoon(index)}
+                        className="absolute bottom-1 left-1 bg-purple-600 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                        title="Generate cartoon"
+                      >
+                        <HiOutlineSparkles className="text-xs" />
+                      </button>
+                    )}
+                  </div>
+                )
+              })}
             </div>
-            <div className="bg-gradient-to-r from-[#8a40fc] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] rounded-[20rem] border-[2px] border-[#893dff] cursor-pointer">
-              <button
-                onClick={generateAllCartoons}
-                className="border-animate w-full rounded-[20rem] cursor-pointer"
-                disabled={isGeneratingAll}
-              >
-                <div className="py-[0.3rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] text-[#fff] md:text-[1rem]">
-                  {isGeneratingAll ? 'Generating...' : 'Generate All'}
-                </div>
-              </button>
+
+            <div className="flex justify-between items-center mt-[0.8rem]">
+              <div onClick={generateAllCartoons} className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200">
+                <HiOutlineSparkles className="md:text-[1.5rem] star" />
+              </div>
+              <div className="bg-gradient-to-r from-[#8a40fc] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] rounded-[20rem] border-[2px] border-[#893dff] cursor-pointer">
+                <button
+                  onClick={generateAllCartoons}
+                  className="border-animate w-full rounded-[20rem] cursor-pointer"
+                  disabled={isGeneratingAll}
+                >
+                  <div className="py-[0.3rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] text-[#fff] md:text-[1rem]">
+                    {isGeneratingAll ? 'Generating...' : 'Generate All'}
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>

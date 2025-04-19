@@ -14,7 +14,7 @@ const Navbar = ({ setClick }: NavbarProps) => {
   const { user, token } = useContexts();
   const isAuthenticated = token === "";
   return (
-    <div className="fixed w-full px-[0.8rem] md:px-[2rem] lg:px-[1.5rem] py-[1rem] bg-[#fff] text-[#000] z-20 ">
+    <div className="fixed w-full mx-auto max-w-[1550px] px-[0.8rem] md:px-[2rem] lg:px-[1.5rem] py-[1rem] text-[#fff] bg-[#000] z-20 ">
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <Image
@@ -41,7 +41,7 @@ const Navbar = ({ setClick }: NavbarProps) => {
           />
         )}
         <div
-          className="p-[0.8rem] bg-gray-200 rounded-xl cursor-pointer sm:hidden"
+          className="p-[0.8rem] bg-black rounded-xl cursor-pointer border border-gray-600 sm:hidden"
           onClick={() => setClick && setClick((prev: boolean) => !prev)}
           role="button" 
           tabIndex={0} 

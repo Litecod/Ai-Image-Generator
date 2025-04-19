@@ -10,11 +10,11 @@ const Reviews = () => {
         <div className='px-[0.8rem] md:px-[2rem] lg:px-[5rem] pt-[3rem] pb-[3rem] bg-[url(../public/download.png)] gray-200'>
             <div className="">
                 <Header icons={BiSolidHappyHeartEyes } clas='text-yellow-500' details='What Our Clients Says'/>
-                <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[35rem] mx-auto'>Join 1M+ users creating art using Imagine</h2>
+                <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[35rem] mx-auto head font-medium'>Join 1M+ users creating art using Imagine</h2>
                 <div className="mt-[2rem] flex justify-between gap-[3rem] flex-wrap">
                     {reviewss.map((item, index) => {
                         return (
-                            <div key={index} className=" w-full md:max-w-[22rem] 2xl:max-w-[20.5rem] md:mx-auto lg:mx-0 p-[1rem] rounded-xl bg-[#000] shadow-sm shadow-[#ffffff2d]">
+                            <div key={index} className=" w-full md:max-w-[22rem] 2xl:max-w-[23.5rem] md:mx-auto lg:mx-0 p-[1rem] rounded-xl bg-[#000] shadow-sm shadow-[#ffffff2d]">
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-2">
                                         <Image src={item.image} alt='Image' />

@@ -6,9 +6,10 @@ import { FcGoogle } from "react-icons/fc";
 import logo from "@/public/logo.jpg";
 import { useContexts } from "@/context/AuthContext";
 import { toast } from "react-toastify";
+import img from "@/public/000.jpg"
 
 export default function LoginPage() {
-  const { google} = useContexts();
+  const { google } = useContexts();
 
   const googleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -22,36 +23,35 @@ export default function LoginPage() {
 
   return (
     <div className="absolute w-full top-0 left-0 min-h-screen flex items-center justify-center bg-[#ffffff56] bg-cover bg-center p-4 z-30">
-    
+
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
-      <div className="relative z-10 w-full max-w-6xl bg-gray-900/80 border border-gray-700 rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative z-10 w-full max-w-4xl bg-gray-900/80 border-[10px] border-gray-900/80 rounded-2xl overflow-hidden shadow-2xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-          <div className="flex flex-col items-center justify-center p-8 lg:p-12 bg-gradient-to-br from-purple-900/50 to-blue-900/30">
-            <div className="text-center space-y-6">
+          <div className="flex flex-col p-6 lg:p-8 gap-[3rem] bg-gradient-to-b from-gray-900/80 to-purple-800/80 rounded-xl">
+            <div className="flex gap-2 items-center">
               <Image
                 src={logo}
-                alt="Logo"
-                width={120}
-                height={120}
-                className="mx-auto rounded-full"
-                priority
+                alt="Cartoonify 3D Logo"
+                className="w-[2rem] sm:w-[2.5rem] h-[2rem] sm:h-[2.5rem] rounded-full"
               />
-              <h1 className="text-3xl font-bold text-white">Welcome to Cartoonify 3D</h1>
-              <p className="text-gray-300 text-lg max-w-md">
-                Transform your photos into stunning 3D cartoons with our AI-powered platform.
-              </p>
-              <div className="pt-6">
-                <div className="h-1 w-24 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto rounded-full" />
-              </div>
+              <p className="text-[1.3rem] sm:text-[1.4rem] logo font-medium">Cartoonify 3D</p>
+            </div>
+
+            <Image className="w-full max-w-[12rem] mx-auto rounded-xl" src={img} alt="Image"></Image>
+
+            <div className="flex flex-col gap-[1.5rem]">
+              <button className="rounded-xl py-[0.3rem] px-[0.8rem] bg-[#fff] text-gray-500 max-w-[8rem]">Image Studio</button>
+              <p>Transform your photos into stunning 3D cartoons with our AI-powered platform.</p>
             </div>
           </div>
 
+
           {/* Right side - Login Form */}
-          <div className="flex flex-col items-center justify-center p-8 lg:p-12 bg-gray-900/70">
+          <div className="flex flex-col items-center justify-center p-6 lg:p-8 bg-gray-900/70">
             <div className="w-full max-w-md space-y-8">
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-white">Sign In</h2>
+                <h2 className="text-2xl font-bold text-white">Welcome to Cartoonify 3D</h2>
                 <p className="mt-2 text-gray-400">
                   Continue with your Google account
                 </p>
@@ -78,6 +78,10 @@ export default function LoginPage() {
                     Secure authentication
                   </span>
                 </div>
+              </div>
+              <div className="items-center text-center flex flex-col gap-[0.5rem]">
+                <p>By proceeding, you agree to our <span>Terms of use</span></p>
+                <p>Click on continue with Gogle</p>
               </div>
             </div>
           </div>

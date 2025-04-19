@@ -16,12 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className=" bg-[#fff] text-[#000] sm:overflow-hidden"
+        className="mx-auto max-w-[1550px] bg-[#000] text-[#fff] sm:overflow-hidden"
       >
         {/* flex w-full gap-[1rem] pt-[3.2rem] md:pt-[4rem] */}
         <AuthContextProvider>
           <NavSide />
-          <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl sm:pt-[5rem] sm:overflow-y-scroll sm:h-screen">
+          <div className="w-full sm:w-[80%] md:w-[70%] lg:w-[83%] sm:float-right rounded-xl sm:overflow-y-scroll ">
             {children}
           </div>
 
