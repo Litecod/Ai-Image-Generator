@@ -135,7 +135,7 @@ const GeneratePage = () => {
           )}
           <label htmlFor='file' className='mx-auto block cursor-pointer'>
             {cartoon === "" ? <div className='p-[2rem] w-full mx-auto rounded-xl max-w-[50rem] flex flex-col gap-[2rem] border border-gray-800 bg-gradient-to-br from-gray-950 via-gray-900 to-black'>
-              <p className='text-center font-medium sm:text-[1.3rem]'>Upload your image from your system</p>
+              <p className='text-center font-medium sm:text-[1.3rem]'>Upload image from your system</p>
               <div className="w-full h-[13rem] sm:h-[50%] border-[2px] border-dashed bg-gray-900 border-gray-700 rounded-xl  p-[1rem] ">
                 <BsImageFill className='mx-auto text-[3rem] font-light text-blue-300 mt-[2rem] mb-[2rem]' />
                 <div className="text-center mb-[2rem]">
