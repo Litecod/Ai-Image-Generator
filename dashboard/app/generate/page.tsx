@@ -82,7 +82,7 @@ const GeneratePage = () => {
       setImages(prev => prev.map((img, i) =>
         i === index ? { ...img, cartoonUrl, isGenerating: false } : img
       ));
-      toast.success("loading")
+      //toast.success("loading")
     } catch (error) {
       console.error('Error generating cartoon:', error);
       setImages(prev => prev.map((img, i) =>
@@ -115,7 +115,7 @@ const GeneratePage = () => {
         price: userprice,
         period: userperiod,
         credits: usercredit,
-        image: imageGen,
+        image: imageGen - 1,
         startDate: userStartDate,
         status: status,
         isTrial: isTrial
