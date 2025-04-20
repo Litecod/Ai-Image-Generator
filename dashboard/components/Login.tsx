@@ -28,7 +28,7 @@ export default function LoginPage() {
 
       <div className="relative z-10 w-full max-w-4xl bg-gray-900/80 border-[10px] border-gray-900/80 rounded-2xl overflow-hidden shadow-2xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-          <div className="flex flex-col p-6 lg:p-8 gap-[3rem] bg-gradient-to-b from-gray-900/80 to-purple-800/80 rounded-xl">
+          <div className="flex flex-col p-6 lg:p-8 gap-[1rem] sm:gap-[3rem] bg-gradient-to-b from-gray-900/80 to-purple-800/80 rounded-xl">
             <div className="flex gap-2 items-center">
               <Image
                 src={logo}
@@ -38,9 +38,9 @@ export default function LoginPage() {
               <p className="text-[1.3rem] sm:text-[1.4rem] logo font-medium">Cartoonify 3D</p>
             </div>
 
-            <Image className="w-full max-w-[12rem] mx-auto rounded-xl" src={img} alt="Image"></Image>
+            <Image className="w-full max-w-[10rem] sm:max-w-[12rem] mx-auto rounded-xl" src={img} alt="Image"></Image>
 
-            <div className="flex flex-col gap-[1.5rem]">
+            <div className="flex flex-col gap-[0.5rem] sm:gap-[1.5rem]">
               <button className="rounded-xl py-[0.3rem] px-[0.8rem] bg-[#fff] text-gray-500 max-w-[8rem]">Image Studio</button>
               <p>Transform your photos into stunning 3D cartoons with our AI-powered platform.</p>
             </div>
@@ -51,7 +51,7 @@ export default function LoginPage() {
           <div className="flex flex-col items-center justify-center p-6 lg:p-8 bg-gray-900/70">
             <div className="w-full max-w-md space-y-8">
               <div className="text-center">
-                <h2 className="text-2xl font-bold text-white">Welcome to Cartoonify 3D</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">Welcome to Cartoonify 3D</h2>
                 <p className="mt-2 text-gray-400">
                   Continue with your Google account
                 </p>
@@ -81,7 +81,7 @@ export default function LoginPage() {
               </div>
               <div className="items-center text-center flex flex-col gap-[0.5rem]">
                 <p>By proceeding, you agree to our <span>Terms of use</span></p>
-                <p>Click on continue with Gogle</p>
+                <p>Click on continue with Google</p>
               </div>
             </div>
           </div>
