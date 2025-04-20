@@ -10,6 +10,7 @@ import imgTwo from "@/public/020.jpg"
 import imgOne from "@/public/000.jpg"
 import { useContexts } from '@/context/AuthContext'
 import { CiLogout } from "react-icons/ci";
+import { toast } from 'sonner'
 
 
 interface NavbarProps {
@@ -25,6 +26,7 @@ const Sidebar = ({ click }: NavbarProps) => {
     const logout = () => {
         setToken("")
         localStorage.removeItem("token")
+        toast("Just Logged Out ")
     }
     return (
         <div className="max-w-[1550px] w-full absolute sm:fixed z-10 sm:-z-10">

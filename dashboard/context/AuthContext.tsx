@@ -16,10 +16,18 @@ type AuthContextType = {
   fetchUser: () => Promise<void>;
   user: User | null;
   token: string;
-  setToken: React.Dispatch<SetStateAction<string>>;
+  setToken: React.Dispatch<SetStateAction<string>> | React.Dispatch<SetStateAction<string>>;
   backendUrl: string,
   imageGen: number,
-  userId: string
+  userId: string,
+  setImageGen: any,
+  uusername: string,
+  userprice: number,
+  userperiod: string,
+  usercredit: number,
+  userStartDate: string,
+  status: string,
+  isTrial: boolean,
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,25 +37,32 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string>("");
   const [imageGen, setImageGen] = useState<number>(0);
   const [userId, setUserId] = useState("")
+  const [uusername, setUusername] = useState("")
+  const [userprice, setUserprice] = useState(0)
+  const [userperiod, setUserperiod] = useState("")
+  const [usercredit, setUsercredit] = useState(0)
+  const [userStartDate, setUserStartDate] = useState("")
+  const [status, setStatus] = useState("")
+  const [isTrial, setisTrial] = useState(true)
   const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
 
 
-    useEffect(() => {
-      const handleRefresh = () => {
-        console.log('App refreshed or loaded');
-        fetchUser();
-      };
-      handleRefresh();
-      const beforeUnloadHandler = () => {
-        console.log('User is refreshing the page');
-      };
-  
-      window.addEventListener('beforeunload', beforeUnloadHandler);
-  
-      return () => {
-        window.removeEventListener('beforeunload', beforeUnloadHandler);
-      };
-    }, [])
+  useEffect(() => {
+    const handleRefresh = () => {
+      console.log('App refreshed or loaded');
+      fetchUser();
+    };
+    handleRefresh();
+    const beforeUnloadHandler = () => {
+      console.log('User is refreshing the page');
+    };
+
+    window.addEventListener('beforeunload', beforeUnloadHandler);
+
+    return () => {
+      window.removeEventListener('beforeunload', beforeUnloadHandler);
+    };
+  }, [])
 
 
   const fetchUser = async () => {
@@ -63,7 +78,13 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       if (response.data.success) {
         setImageGen(response.data.userInfo.subscription.image)
         setUserId(response.data.userInfo._id)
-        console.log(response.data)
+        setUusername(response.data.userInfo.subscription.plan)
+        setUserprice(response.data.userInfo.subscription.price)
+        setUserperiod(response.data.userInfo.subscription.period)
+        setUsercredit(response.data.userInfo.subscription.credits)
+        setUserStartDate(response.data.userInfo.subscription.startDate)
+        setStatus(response.data.userInfo.subscription.status)
+        setisTrial(response.data.userInfo.subscription.isTrial)
       }
       return response.data;
     } catch (error) {
@@ -133,7 +154,15 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     backendUrl,
     fetchUser,
     imageGen,
-    userId
+    userId,
+    setImageGen,
+    uusername,
+    userprice,
+    userperiod,
+    usercredit,
+    userStartDate,
+    status,
+    isTrial
   };
 
   return (

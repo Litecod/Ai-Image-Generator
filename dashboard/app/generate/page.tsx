@@ -6,9 +6,10 @@ import { FiDownload } from "react-icons/fi";
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { BsImageFill } from 'react-icons/bs';
 import { getConvertedImageURLFromBase64 } from '@/lib/image-conversion';
-import toast, { ToastBar } from 'react-hot-toast';
 import { downloadImage } from '@/lib/download';
 import { useContexts } from '@/context/AuthContext';
+import { toast } from "sonner"
+import axios from 'axios';
 
 
 type ImageFile = {
@@ -23,9 +24,8 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
-  const { imageGen, fetchUser } = useContexts()
+  const { imageGen, fetchUser, setImageGen, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial } = useContexts()
 
-  // Clean up object URLs when component unmounts
   useEffect(() => {
     return () => {
       images.forEach((image) => {
@@ -82,7 +82,7 @@ const GeneratePage = () => {
       setImages(prev => prev.map((img, i) =>
         i === index ? { ...img, cartoonUrl, isGenerating: false } : img
       ));
-      toast("loading")
+      toast.success("loading")
     } catch (error) {
       console.error('Error generating cartoon:', error);
       setImages(prev => prev.map((img, i) =>
@@ -95,7 +95,7 @@ const GeneratePage = () => {
   const generateAllCartoons = async () => {
     fetchUser()
     if (imageGen === 0) {
-      toast.error("Purchase Your Subscription to Generate")
+      toast("Purchase Your Subscription to Generate, You have 3 free trials")
     }
     if (images.length === 0 || isGeneratingAll) return;
 
@@ -104,10 +104,34 @@ const GeneratePage = () => {
       for (let i = 0; i < images.length; i++) {
         if (!images[i].cartoonUrl) {
           await generateCartoon(i);
+          setImageGen((prev: number) => prev - 1)
         }
       }
     } finally {
       setIsGeneratingAll(false);
+
+      const subscriptionData = {
+        plan: uusername,
+        price: userprice,
+        period: userperiod,
+        credits: usercredit,
+        image: imageGen,
+        startDate: userStartDate,
+        status: status,
+        isTrial: isTrial
+      }
+
+      try {
+        const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+        if (response.data.success) {
+          console.log("updated")
+        } else {
+          toast.error(response.data.message)
+        }
+      } catch (error) {
+        toast.error('Payment error:');
+        console.log(error)
+      }
     }
   };
 
@@ -127,7 +151,7 @@ const GeneratePage = () => {
           {cartoon === "" ? "" : (
             <button
               onClick={() => downloadImage(cartoon!, `cartoon.png`)}
-              className="absolute top-0 left-1 bg-green-600 text-white rounded-xl p-[0.5rem] flex items-center justify-center"
+              className="absolute top-[5rem] sm:top-0 sm:left-1 bg-green-600 text-white rounded-xl p-[0.5rem] flex items-center justify-center"
               title="Download cartoon"
             >
               <FiDownload />

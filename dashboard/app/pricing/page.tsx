@@ -6,6 +6,7 @@ import { priceOne, priceTwo, priceThree } from '@/data/price';
 import { useContexts } from '@/context/AuthContext';
 import axios from 'axios';
 import { loadStripe } from "@stripe/stripe-js"
+import { toast } from 'sonner';
 
 type PricePlan = {
   name: string;
@@ -70,7 +71,8 @@ const Pricing = () => {
       }
       return response.data;
     } catch (error) {
-      console.error('Subscription error:', error);
+      toast.error('Subscription error:');
+      console.log(error) 
       throw error;
     }
   }
@@ -78,11 +80,9 @@ const Pricing = () => {
   const handleSubscribe = async (plan: PricePlan) => {
     fetchUser()
     if (!user) {
-      alert("Please sign in to subscribe");
+      toast.error("Please sign in to subscribe");
       return;
     }
-
-    console.log(plan)
 
     const subscriptionData = {
       plan: plan.name,
@@ -101,11 +101,11 @@ const Pricing = () => {
         const { session_url } = response.data
         window.location.replace(session_url)
       } else {
-        console.log(response.data.message)
+        toast.error(response.data.message)
       }
     } catch (error) {
-      console.error('Payment error:', error);
-      console.log(userId)
+      toast.error('Payment error:');
+      console.log(error)
     }
   }
   return (

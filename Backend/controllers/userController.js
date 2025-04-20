@@ -87,7 +87,7 @@ const google = async (req, res) => {
 
 const addSubscription = async (req, res) => {
   try {
-    const { userId, plan, price, period, credits, image } = req.body;
+    const { userId, plan, price, period, credits, image, startDate, endDate, status, isTrial } = req.body;
 
     // Input validation
     if (!userId || !plan || !price || !period || !credits || !image) {
@@ -103,10 +103,10 @@ const addSubscription = async (req, res) => {
       period,
       credits,
       image,
-      startDate: new Date(),
-      endDate: calculateEndDate(period),
-      status: "active",
-      isTrial: false,
+      startDate,
+      endDate,
+      status,
+      isTrial,
     };
 
     const updatedUser = await userModel.findByIdAndUpdate(

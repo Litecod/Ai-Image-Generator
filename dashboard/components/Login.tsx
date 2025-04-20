@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import logo from "@/public/logo.jpg";
 import { useContexts } from "@/context/AuthContext";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import img from "@/public/000.jpg"
 
 export default function LoginPage() {
@@ -17,6 +17,7 @@ export default function LoginPage() {
       await google();
       toast.success("login Successful")
     } catch (error) {
+      toast.error("Couldn't login",);
       console.error("Google login error:", error);
     }
   };
