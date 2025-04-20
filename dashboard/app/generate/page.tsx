@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import { FiDownload } from "react-icons/fi";
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { BsImageFill } from 'react-icons/bs';
 import { getConvertedImageURLFromBase64 } from '@/lib/image-conversion';
 import toast, { ToastBar } from 'react-hot-toast';
 import { downloadImage } from '@/lib/download';
 import { useContexts } from '@/context/AuthContext';
+
 
 type ImageFile = {
   file: File;
@@ -120,23 +121,26 @@ const GeneratePage = () => {
   };
 
   return (
-    <div className={`sm:pt-[5rem] min-h-screen h-screen ${cartoon !== "" ? "pt-[8rem]" : "pt-[13rem]"}`}>
-      <div className="relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gray-100 rounded-xl h-full">
-        <div className="container mx-auto sm:p-4 h-full sm:pt-[4rem]">
+    <div className={`sm:pt-[5rem] min-h-screen h-screen `}>
+      <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-xl h-full border border-gray-900 ${cartoon !== "" ? "pt-[8rem]" : "pt-[13rem]"}`}>
+        <div className="container mx-auto sm:p-4  sm:pt-[4rem]">
           {cartoon === "" ? "" : (
             <button
               onClick={() => downloadImage(cartoon!, `cartoon.png`)}
-              className="absolute top-0 left-1 bg-green-600 text-white rounded-full w-5 h-5 flex items-center justify-center"
+              className="absolute top-0 left-1 bg-green-600 text-white rounded-xl p-[0.5rem] flex items-center justify-center"
               title="Download cartoon"
             >
-              Download Image
+              <FiDownload />
             </button>
           )}
-          <label htmlFor='file' className='mx-auto block h-full'>
-            {cartoon === "" ? <div className="w-full h-[13rem] sm:h-[50%] border-[2px] border-dashed border-[#000] mx-auto rounded-xl bg-[#c9a5ff25] p-[1rem] max-w-[50rem]">
-              <BsImageFill className='mx-auto text-[3rem] font-light text-blue-900 mt-[2rem] sm:mt-[4rem]' />
-              <div className="text-center">
-                <p className='font-medium mt-4'><span className='underline text-purple-800 '>Click to upload</span> or Drag and Drop</p>
+          <label htmlFor='file' className='mx-auto block cursor-pointer'>
+            {cartoon === "" ? <div className='p-[2rem] w-full mx-auto rounded-xl max-w-[50rem] flex flex-col gap-[2rem] border border-gray-800 bg-gradient-to-br from-gray-950 via-gray-900 to-black'>
+              <p className='text-center font-medium sm:text-[1.3rem]'>Upload your image from your system</p>
+              <div className="w-full h-[13rem] sm:h-[50%] border-[2px] border-dashed bg-gray-900 border-gray-700 rounded-xl  p-[1rem] ">
+                <BsImageFill className='mx-auto text-[3rem] font-light text-blue-300 mt-[2rem] mb-[2rem]' />
+                <div className="text-center mb-[2rem]">
+                  <p className='font-medium mt-4'><span className='underline text-[#8a40fc] '>Click to upload</span> or Drag and Drop</p>
+                </div>
               </div>
             </div> : <div>
               <img
@@ -156,7 +160,7 @@ const GeneratePage = () => {
             id='file'
           />
 
-          <div className={`absolute bottom-[1rem] sm:bottom-[2rem]  p-[0.6rem] px-[1rem] items-center w-[94%] sm:w-[87%] lg:w-[92%] bg-white rounded-2xl mx-auto ${images.length === 0 ? `${cartoon === "" ? "sm:mt-[16rem]" : "sm:mt-[11rem]"}` : `${cartoon === "" ? "sm:mt-[13rem]" : "sm:mt-[8rem]"}`} `}>
+          <div className={`absolute bottom-[1rem] sm:bottom-[2rem]  p-[0.6rem] px-[1rem] items-center w-[94%] sm:w-[87%] lg:w-[92%] bg-gray-900 border border-gray-700 rounded-2xl mx-auto ${images.length === 0 ? `${cartoon === "" ? "sm:mt-[16rem]" : "sm:mt-[11rem]"}` : `${cartoon === "" ? "sm:mt-[13rem]" : "sm:mt-[8rem]"}`} `}>
             <div className="flex gap-2 flex-wrap">
               {images.map((image, index) => {
                 console.log(image.previewUrl)
@@ -197,8 +201,8 @@ const GeneratePage = () => {
             </div>
 
             <div className="flex justify-between items-center mt-[0.8rem]">
-              <div onClick={generateAllCartoons} className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200">
-                <HiOutlineSparkles className="md:text-[1.5rem] star" />
+              <div onClick={generateAllCartoons} className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200 cursor-pointer">
+                <HiOutlineSparkles className="md:text-[1.4rem] star" />
               </div>
               <div className="bg-gradient-to-r from-[#8a40fc] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] rounded-[20rem] border-[2px] border-[#893dff] cursor-pointer">
                 <button
@@ -207,7 +211,7 @@ const GeneratePage = () => {
                   disabled={isGeneratingAll}
                 >
                   <div className="py-[0.3rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] text-[#fff] md:text-[1rem]">
-                    {isGeneratingAll ? 'Generating...' : 'Generate All'}
+                    {isGeneratingAll ? 'Generating...' : 'Generate'}
                   </div>
                 </button>
               </div>
