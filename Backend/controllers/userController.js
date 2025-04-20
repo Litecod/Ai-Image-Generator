@@ -53,7 +53,7 @@ const google = async (req, res) => {
         price: 0,
         period: "",
         credits: "",
-        image: 5,
+        image: 3,
         startDate: new Date(),
         status: "inactive",
         isTrial: true,

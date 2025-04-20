@@ -1,5 +1,6 @@
 import { HiOutlineSparkles } from "react-icons/hi";
 import Scroller from "./Scroller"
+import Link from "next/link";
 
 
 const Hero = () => {
@@ -15,7 +16,7 @@ const Hero = () => {
                     <div className="bg-gradient-to-r from-[#4802b1] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] mx-auto rounded-[20rem] mt-[2rem] border-[4px] border-[#00000034]">
                         <button className="border-animate w-full rounded-[20rem] ">
                             <div className="py-[0.3rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] md:text-[1rem]">
-                                <HiOutlineSparkles className="md:text-[1.7rem] star"/> Get Started
+                                <HiOutlineSparkles className="md:text-[1.7rem] star" /> <Link href={"https://ai-image-generator-dasboard.vercel.app"}>Get Started </Link>
                             </div>
                         </button>
                     </div>

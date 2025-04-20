@@ -28,6 +28,7 @@ type AuthContextType = {
   userStartDate: string,
   status: string,
   isTrial: boolean,
+  endDate: string,
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,6 +45,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [userStartDate, setUserStartDate] = useState("")
   const [status, setStatus] = useState("")
   const [isTrial, setisTrial] = useState(true)
+  const [endDate, setEndDate] = useState("")
   const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
 
 
@@ -85,6 +87,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setUserStartDate(response.data.userInfo.subscription.startDate)
         setStatus(response.data.userInfo.subscription.status)
         setisTrial(response.data.userInfo.subscription.isTrial)
+        setEndDate(response.data.userInfo.subscription.endDate)
       }
       return response.data;
     } catch (error) {
@@ -162,7 +165,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     usercredit,
     userStartDate,
     status,
-    isTrial
+    isTrial,
+    endDate
   };
 
   return (

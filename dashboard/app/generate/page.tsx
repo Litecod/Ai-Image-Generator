@@ -24,7 +24,7 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
-  const { imageGen, fetchUser, setImageGen, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial } = useContexts()
+  const { imageGen, fetchUser, endDate, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial } = useContexts()
 
   useEffect(() => {
     return () => {
@@ -36,6 +36,36 @@ const GeneratePage = () => {
       });
     };
   }, [images]);
+
+  const CancelSubscriptionMonthEnd = async () => {
+    const subscriptionData = {
+      plan: "",
+      price: 0,
+      period: "",
+      credits: 0,
+      image: 0,
+    }
+
+    if (imageGen > 0) {
+      try {
+        const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+        if (response.data.success) {
+          console.log("updated")
+        } else {
+          toast.error(response.data.message)
+        }
+      } catch (error) {
+        toast.error('Payment error:');
+        console.log(error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (endDate === Date()) {
+      CancelSubscriptionMonthEnd()
+    }
+  }, [])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -94,44 +124,47 @@ const GeneratePage = () => {
 
   const generateAllCartoons = async () => {
     fetchUser()
-    if (imageGen === 0) {
-      toast("Purchase Your Subscription to Generate, You have 3 free trials")
-    }
-    if (images.length === 0 || isGeneratingAll) return;
+    if (imageGen > 0) {
 
-    setIsGeneratingAll(true);
-    try {
-      for (let i = 0; i < images.length; i++) {
-        if (!images[i].cartoonUrl) {
-          await generateCartoon(i);
-          setImageGen((prev: number) => prev - 1)
-        }
-      }
-    } finally {
-      setIsGeneratingAll(false);
+      if (images.length === 0 || isGeneratingAll) return;
 
-      const subscriptionData = {
-        plan: uusername,
-        price: userprice,
-        period: userperiod,
-        credits: usercredit,
-        image: imageGen - 1,
-        startDate: userStartDate,
-        status: status,
-        isTrial: isTrial
-      }
-
+      setIsGeneratingAll(true);
       try {
-        const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
-        if (response.data.success) {
-          console.log("updated")
-        } else {
-          toast.error(response.data.message)
+        for (let i = 0; i < images.length; i++) {
+          if (!images[i].cartoonUrl) {
+            await generateCartoon(i);
+          }
         }
-      } catch (error) {
-        toast.error('Payment error:');
-        console.log(error)
+      } finally {
+        setIsGeneratingAll(false);
+
+        const subscriptionData = {
+          plan: uusername,
+          price: userprice,
+          period: userperiod,
+          credits: usercredit,
+          image: imageGen - 1,
+          startDate: userStartDate,
+          status: status,
+          isTrial: isTrial
+        }
+
+        if (imageGen > 0) {
+          try {
+            const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+            if (response.data.success) {
+              console.log("updated")
+            } else {
+              toast.error(response.data.message)
+            }
+          } catch (error) {
+            toast.error('Coundn\'t update');
+            console.log(error)
+          }
+        }
       }
+    } else {
+      toast("Purchase Your Subscription to Generate, Your free trials are used")
     }
   };
 
@@ -146,7 +179,7 @@ const GeneratePage = () => {
 
   return (
     <div className={`sm:pt-[5rem] min-h-screen h-screen `}>
-      <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-xl h-full border border-gray-900 ${cartoon !== "" ? "pt-[8rem]" : "pt-[13rem]"}`}>
+      <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-xl h-full border border-gray-900 ${cartoon !== "" ? "pt-[8rem]" : " pt-[10rem] sm:pt-[1rem]"}`}>
         <div className="container mx-auto sm:p-4  sm:pt-[4rem]">
           {cartoon === "" ? "" : (
             <button

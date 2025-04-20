@@ -5,6 +5,7 @@ import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { priceOne, priceTwo, priceThree } from '@/data/price';
 import { MdOutlinePriceChange } from 'react-icons/md';
 import Header from './Header';
+import Link from 'next/link';
 
 
 
@@ -38,7 +39,7 @@ const Pricing = () => {
                 </div>
                 <div className="mt-[2rem] ">
                     <div className="shadow-md  ">
-                        <div className=" p-[1rem] flex justify-between gap-[1rem] flex-wrap">
+                        <div className=" p-[1rem] flex justify-between gap-[3rem] md:gap-[1rem] lg:gap-[5rem] xl:gap-[3rem] flex-wrap md:grid md:grid-cols-2 xl:grid-cols-3">
                             {
                                 price.map((item, index) => {
                                     return (
@@ -54,7 +55,7 @@ const Pricing = () => {
                                             </div>
                                             <p><span>{item.credit}k</span> credit/ {item.name}</p>
                                             <hr />
-                                            <button className='w-full py-[0.8rem] border-[2px] border-[#0000004a] bg-gray-800 text-[#fff] rounded-xl'>Get Started</button>
+                                            <Link href={"https://ai-image-generator-dasboard.vercel.app"} className='w-full py-[0.8rem] border-[2px] border-[#0000004a] bg-gray-800 text-[#fff] rounded-xl text-center'>Get Started</Link>
                                             <p>What&#39;s Included</p>
                                             <div className="flex flex-col gap-4">
                                                 <div className="flex gap-2 items-center">

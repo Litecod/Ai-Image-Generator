@@ -15,7 +15,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className="mt-[5rem] flex justify-between flex-wrap">
+            <div className="mt-[5rem] flex flex-col sm:flex-row justify-between flex-wrap">
                 <div className="flex gap-4">
                     <FaFacebook />
                     <FaInstagram />
