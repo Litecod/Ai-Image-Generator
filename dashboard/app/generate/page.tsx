@@ -25,7 +25,6 @@ const GeneratePage = () => {
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
   const { imageGen, fetchUser, endDate, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial } = useContexts()
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     return () => {
@@ -49,14 +48,14 @@ const GeneratePage = () => {
 
     if (imageGen > 0) {
       try {
-        const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+        const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
         if (response.data.success) {
           console.log("updated")
         } else {
           toast.error(response.data.message)
         }
       } catch (error) {
-        toast.error('Payment error:');
+        toast.error('update error:');
         console.log(error)
       }
     }
@@ -152,7 +151,7 @@ const GeneratePage = () => {
 
         if (imageGen > 0) {
           try {
-            const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+            const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
             if (response.data.success) {
               console.log("updated")
             } else {
@@ -162,6 +161,19 @@ const GeneratePage = () => {
             toast.error('Coundn\'t update');
             console.log(error)
           }
+        }
+
+        //add photo
+        const photo = cartoon
+        try {
+          const response = await axios.post(backendUrl + "/api/user/addphoto", photo, { headers: { token } })
+          if (response.data.success) {
+            console.log("updated")
+          } else {
+            toast.error(response.data.message)
+          }
+        } catch (error) {
+
         }
       }
     } else {
@@ -179,7 +191,7 @@ const GeneratePage = () => {
   };
 
   const downlo = () => {
-    downloadImage( cartoon,"3D.png");
+    downloadImage(cartoon, "3D.png");
   }
 
   return (
