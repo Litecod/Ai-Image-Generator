@@ -25,7 +25,7 @@ const getImageDetails = async (base64Image: string, imageGen: number) => {
       },
       body: JSON.stringify({
         model: "gpt-4o-mini",
-        max_tokens: imageGen,
+        max_tokens: 4096,
         temperature: 0,
         messages: [
           {

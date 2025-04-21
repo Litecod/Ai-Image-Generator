@@ -25,6 +25,7 @@ const GeneratePage = () => {
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
   const { imageGen, fetchUser, endDate, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial } = useContexts()
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     return () => {
@@ -105,7 +106,7 @@ const GeneratePage = () => {
       const base64Image = await fileToBase64(image.file);
 
       // Call the conversion API
-      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image, imageGen);
+      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image, 4096);
       setCartoon(cartoonUrl)
 
       // Update the image with the cartoon URL
@@ -177,13 +178,17 @@ const GeneratePage = () => {
     });
   };
 
+  const downlo = () => {
+    downloadImage( cartoon,"3D.png");
+  }
+
   return (
     <div className={`sm:pt-[5rem] min-h-screen h-screen `}>
       <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-xl h-full border border-gray-900 ${cartoon !== "" ? "pt-[8rem]" : " pt-[10rem] sm:pt-[1rem]"}`}>
         <div className="container mx-auto sm:p-4  sm:pt-[4rem]">
           {cartoon === "" ? "" : (
             <button
-              onClick={() => downloadImage(cartoon!, `cartoon.png`)}
+              onClick={downlo}
               className="absolute top-[5rem] sm:top-0 sm:left-1 bg-green-600 text-white rounded-xl p-[0.5rem] flex items-center justify-center"
               title="Download cartoon"
             >
