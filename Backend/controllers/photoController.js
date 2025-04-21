@@ -15,16 +15,12 @@ const addPhoto = async (req, res) => {
     const updatedUser = await userModel.findByIdAndUpdate(
       userId,
       {
-        $set: { photo: photoUrl.url },
+        $set: { photoUrl: photoUrl },
       },
       { new: true, runValidators: true }
     );
 
-    res.status(200).json({
-      success: true,
-      message: "Photo added",
-      data: updatedUser
-    });
+    res.json({success: true , data: updatedUser });
   } catch (error) {
     console.error("Add photo Error:", error);
     res.status(500).json({

@@ -127,11 +127,7 @@ const addSubscription = async (req, res) => {
       });
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Subscription updated successfully",
-      subscription: updatedUser.subscription,
-    });
+    res.json({ success: true, data: updatedUser });
   } catch (error) {
     console.error("Subscription error:", error);
     res.status(500).json({

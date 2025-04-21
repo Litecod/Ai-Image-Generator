@@ -151,7 +151,7 @@ const GeneratePage = () => {
 
         if (imageGen > 0) {
           try {
-            const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
+            const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
             if (response.data.success) {
               console.log("updated")
             } else {
@@ -164,8 +164,8 @@ const GeneratePage = () => {
         }
 
         //add photo
-        const photo = cartoon
         try {
+          const photo = cartoon
           const response = await axios.post(backendUrl + "/api/user/addphoto", photo, { headers: { token } })
           if (response.data.success) {
             console.log("updated")
