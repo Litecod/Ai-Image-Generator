@@ -160,9 +160,6 @@ const GeneratePage = () => {
         } catch (error) {
           toast.error('Coundn\'t update');
           console.log(error)
-          console.log("Full error:", error);
-          console.log("Error response data:", error.response?.data); // Most important!
-          console.log("Request config:", error.config);
         }
 
         //add photo
@@ -193,7 +190,7 @@ const GeneratePage = () => {
   };
 
   const downlo = () => {
-    //downloadImage(cartoon, "Cartoonify_Img");
+    downloadImage(cartoon, "Cartoonify_Img");
     console.log(cartoon)
   }
 
