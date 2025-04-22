@@ -1,7 +1,7 @@
 import express from "express";
 import { google, addSubscription, getUser, verifyStripe, PlaceOrderStripe } from "../controllers/userController.js"; 
 import authUser from "../middleware/auth.js";
-import { addPhoto } from "../controllers/photoController.js";
+import { addPhoto, downloadImage } from "../controllers/photoController.js";
 
 const UserRouter = express.Router();
 
@@ -21,5 +21,8 @@ UserRouter.post('/subscription', authUser, addSubscription);
 
 //geting User details
 UserRouter.post('/getusers', authUser, getUser);
+
+//download image 
+UserRouter.get("/download-image", downloadImage)
 
 export default UserRouter;

@@ -53,12 +53,12 @@ const Pricing = () => {
                                                     <p>Bill {item.name}</p>
                                                 </div>
                                             </div>
-                                            <p><span>{item.credit}k</span> credit/ {item.name}</p>
+                                            <p><span>{item.credit} </span> credit/ {item.name}</p>
                                             <hr />
                                             <Link href={"https://ai-image-generator-dasboard.vercel.app"} className='w-full py-[0.8rem] border-[2px] border-[#0000004a] bg-gray-800 text-[#fff] rounded-xl text-center'>Get Started</Link>
                                             <p>What&#39;s Included</p>
                                             <div className="flex flex-col gap-4">
-                                                <div className="flex gap-2 items-center">
+                                                <div className="gap-2 items-center hidden">
                                                     <IoCheckmarkDoneOutline className=" text-[0.8rem]" />
                                                     <span>Up to ~{item.image} Image Generations/year</span>
                                                 </div>

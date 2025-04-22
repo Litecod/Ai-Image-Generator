@@ -144,7 +144,7 @@ const Pricing = () => {
                 </div>
 
                 <p className="text-sm">
-                  <span className="font-medium">{item.credit}k</span> credit/{item.name}
+                  <span className="font-medium">{item.credit} </span> credit/{item.name}
                 </p>
 
                 <hr className="border-gray-200" />
@@ -161,7 +161,7 @@ const Pricing = () => {
                 <h4 className="font-medium">What's Included</h4>
 
                 <ul className="flex flex-col gap-3">
-                  <IncludedItem text={`Up to ~${item.image} Image Generations/year`} />
+                  <div className='hidden'><IncludedItem text={`Up to ~${item.image} Image Generations/year`} /></div>
                   <IncludedItem text="General Commercial Terms" />
                   <IncludedItem text="Image Generations Visibility: Public" />
                   <IncludedItem text={`${item.corcurrency} concurrent Generations`} />

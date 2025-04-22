@@ -150,16 +150,18 @@ const GeneratePage = () => {
           isTrial: isTrial
         }
 
-        try {
-          const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
-          if (response.data.success) {
-            console.log("updated")
-          } else {
-            toast.error(response.data.message)
+        if (imageGen > 0) {
+          try {
+            const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
+            if (response.data.success) {
+              console.log("updated")
+            } else {
+              toast.error(response.data.message)
+            }
+          } catch (error) {
+            toast.error('Coundn\'t update');
+            console.log(error)
           }
-        } catch (error) {
-          toast.error('Coundn\'t update');
-          console.log(error)
         }
 
         //add photo
@@ -190,7 +192,7 @@ const GeneratePage = () => {
   };
 
   const downlo = () => {
-    downloadImage(cartoon, "Cartoonify_Img");
+    downloadImage(cartoon, "Cartoonify_Img.png");
     console.log(cartoon)
   }
 
@@ -207,16 +209,6 @@ const GeneratePage = () => {
               <FiDownload />
             </button>
           )}
-          <button
-            onClick={() => {
-              setPrefix("Create a 3D rendered image of a stylized cartoon character based on following prompt")
-              toast("Default")
-            }}
-            className="absolute top-[5rem] sm:top-1 right-1 bg-green-600 text-white rounded-xl py-[0.3rem] px-[0.5rem] flex items-center justify-center"
-            title="Download cartoon"
-          >
-            Default 3D Image
-          </button>
           <label htmlFor='file' className='mx-auto block cursor-pointer'>
             {cartoon === "" ? <div className='p-[2rem] w-full mx-auto rounded-xl max-w-[50rem] flex flex-col gap-[2rem] border border-gray-800 bg-gradient-to-br from-gray-950 via-gray-900 to-black'>
               <p className='text-center font-medium sm:text-[1.3rem]'>Upload image from your system</p>
@@ -285,9 +277,9 @@ const GeneratePage = () => {
             </div>
 
             <div className="flex justify-between items-center mt-[0.8rem]">
-              <div onClick={generateAllCartoons} className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200 cursor-pointer">
-                <HiOutlineSparkles className="md:text-[1.4rem] star" />
-              </div>
+              <label htmlFor='file' className="p-[0.5rem] rounded-full bg-gray-50 border border-gray-200 cursor-pointer">
+                <BsImageFill className="md:text-[1.4rem] star" />
+              </label>
               <div className="bg-gradient-to-r from-[#8a40fc] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] rounded-[20rem] border-[2px] border-[#893dff] cursor-pointer">
                 <button
                   onClick={generateAllCartoons}

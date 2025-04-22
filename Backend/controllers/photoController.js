@@ -1,5 +1,7 @@
 import userModel from "../models/userModel.js";
 import { v2 as cloudinary } from "cloudinary";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -31,4 +33,45 @@ const addPhoto = async (req, res) => {
   }
 };
 
-export { addPhoto };
+
+const downloadImage =  async (req, res) => {
+  try {
+    const { url } = req.query;
+    
+    if (!url) {
+      return res.status(400).json({ error: 'Missing image URL' });
+    }
+
+    console.log('Fetching image from:', url);
+    
+    const response = await fetch(url, {
+      headers: {
+        'Accept': 'image/*',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Upstream error: ${response.status} ${response.statusText}`);
+    }
+
+    // Set proper headers
+    res.set({
+      'Content-Type': response.headers.get('content-type'),
+      'Content-Disposition': 'attachment; filename="dalle-image.png"',
+      'Cache-Control': 'no-store'
+    });
+
+    // Stream the response
+    response.body.pipe(res);
+  } catch (error) {
+    console.error('Proxy error:', error);
+    res.status(500).json({ 
+      error: 'Failed to download image',
+      details: error.message
+    });
+  }
+};
+
+
+
+export { addPhoto, downloadImage};
