@@ -49,7 +49,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [isTrial, setisTrial] = useState(true)
   const [endDate, setEndDate] = useState("")
   const [prefix, setPrefix] = useState("Create a 3D rendered image of a stylized cartoon character based on following prompt")
-  const backendUrl = "http://localhost:4800"
+  const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
 
 
   useEffect(() => {
