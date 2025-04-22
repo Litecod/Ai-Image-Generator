@@ -6,15 +6,13 @@ Give additional details about facial expression, shape of specs if person has wo
 const OPENAI_USER_PROMPT =
   "Here is an image. Analyze carefully and give me the details";
 
-const prefix =
-  "Create a 3D rendered image of a stylized cartoon character based on following prompt";
 
 export const promptComplete = false;
 export const apiKeyRef = {
   value: process.env.NEXT_PUBLIC_OPENAI_API_KEY || "",
 };
 
-const getImageDetails = async (base64Image: string, imageGen: number) => {
+const getImageDetails = async (base64Image: string) => {
   const promptResponse = await fetch(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -85,8 +83,8 @@ async function generateImage(prompt: string) {
   return imageGenerationResponseJSON.data[0].url;
 }
 
-export async function getConvertedImageURLFromBase64(base64Image: string, imageGen: number) {
-  const imageDetails = await getImageDetails(base64Image, imageGen);
+export async function getConvertedImageURLFromBase64(base64Image: string, prefix: string ) {
+  const imageDetails = await getImageDetails(base64Image);
   const imagePrompt = prefix + "\n\n" + imageDetails;
   const imageUrl = await generateImage(imagePrompt);
   return imageUrl;

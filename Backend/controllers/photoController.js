@@ -10,19 +10,19 @@ const addPhoto = async (req, res) => {
   try {
     const { userId, photo } = req.body;
 
-    const photoUrl = await cloudinary.uploader.upload(photo)
+    const photoUrl = await cloudinary.uploader.upload(photo);
 
-    const updatedUser = await userModel.findByIdAndUpdate(
+    const updatedUserPhoto = await userModel.findByIdAndUpdate(
       userId,
       {
-        $set: { photoUrl: photoUrl },
+        $set: { photoUrl: photoUrl, updatedAt: new Date() },
       },
       { new: true, runValidators: true }
     );
 
-    res.json({success: true , data: updatedUser });
+    res.json({ success: true, data: updatedUserPhoto });
   } catch (error) {
-    console.error("Add photo Error:", error);
+    console.error("Add photo Error", error);
     res.status(500).json({
       success: false,
       message: "Failed to update Photo",

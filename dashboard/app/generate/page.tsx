@@ -24,7 +24,7 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
-  const { imageGen, fetchUser, endDate, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial } = useContexts()
+  const { imageGen, fetchUser, endDate, backendUrl, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial, prefix, setPrefix } = useContexts()
 
   useEffect(() => {
     return () => {
@@ -105,7 +105,7 @@ const GeneratePage = () => {
       const base64Image = await fileToBase64(image.file);
 
       // Call the conversion API
-      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image, 4096);
+      const cartoonUrl = await getConvertedImageURLFromBase64(base64Image, prefix);
       setCartoon(cartoonUrl)
 
       // Update the image with the cartoon URL
@@ -145,36 +145,38 @@ const GeneratePage = () => {
           credits: usercredit,
           image: imageGen - 1,
           startDate: userStartDate,
+          endDate: endDate,
           status: status,
           isTrial: isTrial
         }
 
-        if (imageGen > 0) {
-          try {
-            const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
-            if (response.data.success) {
-              console.log("updated")
-            } else {
-              toast.error(response.data.message)
-            }
-          } catch (error) {
-            toast.error('Coundn\'t update');
-            console.log(error)
-          }
-        }
-
-        //add photo
         try {
-          const photo = cartoon
-          const response = await axios.post(backendUrl + "/api/user/addphoto", photo, { headers: { token } })
+          const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
           if (response.data.success) {
             console.log("updated")
           } else {
             toast.error(response.data.message)
           }
         } catch (error) {
-
+          toast.error('Coundn\'t update');
+          console.log(error)
+          console.log("Full error:", error);
+          console.log("Error response data:", error.response?.data); // Most important!
+          console.log("Request config:", error.config);
         }
+
+        //add photo
+        // try {
+        //   const photo = cartoon
+        //   const response = await axios.post(backendUrl + "/api/user/addphoto", photo, { headers: { token } })
+        //   if (response.data.success) {
+        //     console.log("updated")
+        //   } else {
+        //     toast.error(response.data.message)
+        //   }
+        // } catch (error) {
+
+        // }
       }
     } else {
       toast("Purchase Your Subscription to Generate, Your free trials are used")
@@ -191,7 +193,8 @@ const GeneratePage = () => {
   };
 
   const downlo = () => {
-    downloadImage(cartoon, "3D.png");
+    //downloadImage(cartoon, "Cartoonify_Img");
+    console.log(cartoon)
   }
 
   return (
@@ -207,6 +210,16 @@ const GeneratePage = () => {
               <FiDownload />
             </button>
           )}
+          <button
+            onClick={() => {
+              setPrefix("Create a 3D rendered image of a stylized cartoon character based on following prompt")
+              toast("Default")
+            }}
+            className="absolute top-[5rem] sm:top-1 right-1 bg-green-600 text-white rounded-xl py-[0.3rem] px-[0.5rem] flex items-center justify-center"
+            title="Download cartoon"
+          >
+            Default 3D Image
+          </button>
           <label htmlFor='file' className='mx-auto block cursor-pointer'>
             {cartoon === "" ? <div className='p-[2rem] w-full mx-auto rounded-xl max-w-[50rem] flex flex-col gap-[2rem] border border-gray-800 bg-gradient-to-br from-gray-950 via-gray-900 to-black'>
               <p className='text-center font-medium sm:text-[1.3rem]'>Upload image from your system</p>

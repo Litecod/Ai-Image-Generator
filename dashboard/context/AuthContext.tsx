@@ -29,6 +29,8 @@ type AuthContextType = {
   status: string,
   isTrial: boolean,
   endDate: string,
+  prefix: string,
+  setPrefix: React.Dispatch<SetStateAction<string>>,
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,7 +48,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [status, setStatus] = useState("")
   const [isTrial, setisTrial] = useState(true)
   const [endDate, setEndDate] = useState("")
-  const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
+  const [prefix, setPrefix] = useState("Create a 3D rendered image of a stylized cartoon character based on following prompt")
+  const backendUrl = "http://localhost:4800"
 
 
   useEffect(() => {
@@ -166,7 +169,9 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     userStartDate,
     status,
     isTrial,
-    endDate
+    endDate,
+    prefix,
+    setPrefix
   };
 
   return (

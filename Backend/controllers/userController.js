@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const currency = "usd";
 
 const google = async (req, res) => {
-  const { username, email, subscription } = req.body;
+  const { username, email, photoUrl, subscription } = req.body;
 
   try {
     // Input validation
@@ -48,6 +48,7 @@ const google = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      photoUrl,
       subscription: subscription || {
         plan: "none",
         price: 0,
@@ -55,6 +56,7 @@ const google = async (req, res) => {
         credits: "",
         image: 3,
         startDate: new Date(),
+        endDate: "none",
         status: "inactive",
         isTrial: true,
       },
@@ -90,12 +92,6 @@ const addSubscription = async (req, res) => {
     const { userId, plan, price, period, credits, image, startDate, endDate, status, isTrial } = req.body;
 
     // Input validation
-    if (!userId || !plan || !price || !period || !credits || !image) {
-      return res.status(400).json({
-        success: false,
-        message: "All subscription fields are required",
-      });
-    }
 
     const subscriptionData = {
       plan,
