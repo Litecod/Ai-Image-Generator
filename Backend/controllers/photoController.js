@@ -41,19 +41,16 @@ const downloadImage =  async (req, res) => {
     if (!url) {
       return res.status(400).json({ error: 'Missing image URL' });
     }
-
-    console.log('Fetching image from:', url);
     
-    const response = await fetch(url, {
-      headers: {
-        'Accept': 'image/*',
-      }
-    });
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`Upstream error: ${response.status} ${response.statusText}`);
     }
 
+    // Convert to buffer
+    const buffer = await response.arrayBuffer();
+    
     // Set proper headers
     res.set({
       'Content-Type': response.headers.get('content-type'),
@@ -61,8 +58,9 @@ const downloadImage =  async (req, res) => {
       'Cache-Control': 'no-store'
     });
 
-    // Stream the response
-    response.body.pipe(res);
+    // Send the buffer
+    res.send(Buffer.from(buffer));
+
   } catch (error) {
     console.error('Proxy error:', error);
     res.status(500).json({ 

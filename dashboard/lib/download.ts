@@ -1,7 +1,8 @@
+
 export const downloadImage = async (url: string, filename: string = "dalle-image.png") => {
   try {
     // Encode the URL parameter properly
-    const proxyUrl = new URL('http://localhost:4800/api/user/download-image');
+    const proxyUrl = new URL('https://ai-image-generator-backend-two.vercel.app/api/user/download-image');
     proxyUrl.searchParams.append('url', url);
 
     const response = await fetch(proxyUrl.toString());
