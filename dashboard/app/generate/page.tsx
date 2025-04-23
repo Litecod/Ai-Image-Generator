@@ -192,7 +192,7 @@ const GeneratePage = () => {
   };
 
   const downlo = () => {
-    downloadImage(cartoon, "Cartoonify_Img.png");
+    downloadImage(cartoon, "Cartoonify_Img.png" );
     console.log(cartoon)
   }
 
