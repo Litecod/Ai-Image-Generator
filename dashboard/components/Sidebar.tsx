@@ -27,9 +27,22 @@ const Sidebar = ({ click }: NavbarProps) => {
     const pathname = usePathname()
 
     const logout = () => {
-        setToken("")
-        localStorage.removeItem("token")
-        toast("Just Logged Out ")
+
+        toast("Are you sure you want to log out?", {
+            action: {
+                label: "Yes, log out",
+                onClick: () => {
+                    setToken("")
+                    localStorage.removeItem("token")
+                    toast("Just Logged Out ")
+                },
+            },
+            cancel: {
+                label: "Cancel",
+                onClick: () => toast.dismiss(),
+            },
+            duration: 10000,
+        });
     }
     const handleShrek = () => {
         setPrefix("Generate a shrek cartoon ogre with green skin, large round belly, and big long ears  based on following prompt")
