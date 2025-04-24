@@ -27,7 +27,7 @@ const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
   const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const { user, backendUrl, token, userId, fetchUser, imageGen } = useContexts();
+  const { user, backendUrl, token, userId, fetchUser, imageGen, setPlan } = useContexts();
 
 
   useEffect(() => {
@@ -83,13 +83,14 @@ const Pricing = () => {
       toast.error("Please sign in to subscribe");
       return;
     }
+    setPlan(plan)
 
     const subscriptionData = {
       plan: plan.name,
       price: plan.price,
       period: plan.period,
       credits: plan.credit,
-      image: imageGen + plan.image,
+      image: plan.image,
       startDate: new Date(),
       status: 'active',
       isTrial: true

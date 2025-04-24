@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 type AuthContextType = {
   google: () => Promise<void>;
@@ -31,6 +32,9 @@ type AuthContextType = {
   endDate: string,
   prefix: string,
   setPrefix: React.Dispatch<SetStateAction<string>>,
+  plan: any,
+  setPlan: any,
+  payment: string
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -47,9 +51,11 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [userStartDate, setUserStartDate] = useState("")
   const [status, setStatus] = useState("")
   const [isTrial, setisTrial] = useState(true)
+  const [payment, setPayment] = useState("true")
   const [endDate, setEndDate] = useState("")
   const [prefix, setPrefix] = useState("Create a 3D rendered image of a stylized cartoon character based on following prompt")
-  const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
+  const backendUrl = "http://localhost:4800"
+  const [plan, setPlan] = useState({})
 
 
   useEffect(() => {
@@ -71,7 +77,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
 
   const fetchUser = async () => {
-
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
@@ -80,9 +85,10 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           headers: { token },
         }
       );
+      
       if (response.data.success) {
-        setImageGen(response.data.userInfo.subscription.image)
         setUserId(response.data.userInfo._id)
+        setPayment(response.data.userInfo.payment)
         setUusername(response.data.userInfo.subscription.plan)
         setUserprice(response.data.userInfo.subscription.price)
         setUserperiod(response.data.userInfo.subscription.period)
@@ -91,6 +97,14 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setStatus(response.data.userInfo.subscription.status)
         setisTrial(response.data.userInfo.subscription.isTrial)
         setEndDate(response.data.userInfo.subscription.endDate)
+        setPayment(response.data.userInfo.payment)
+        setPayment(response.data.userInfo.payment)
+        if (response.data.userInfo.payment === "true") {
+          setImageGen(response.data.userInfo.subscription.image)
+        } else if(response.data.userInfo.payment === "false") {
+          setImageGen(0)
+          toast("Subscribe to generate")
+        }
       }
       return response.data;
     } catch (error) {
@@ -171,7 +185,10 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     isTrial,
     endDate,
     prefix,
-    setPrefix
+    setPrefix,
+    plan,
+    setPlan,
+    payment
   };
 
   return (

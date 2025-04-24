@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { MdOutlinePhotoCameraBack, MdOutlinePriceChange } from 'react-icons/md'
 import { RiAiGenerate2 } from 'react-icons/ri'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import img from "@/public/super.png"
 import shrek from "@/public/shrek.png"
@@ -25,6 +25,7 @@ interface NavbarProps {
 const Sidebar = ({ click }: NavbarProps) => {
     const { imageGen, setToken, setPrefix } = useContexts();
     const pathname = usePathname()
+    const router = useRouter()
 
     const logout = () => {
 
@@ -35,6 +36,7 @@ const Sidebar = ({ click }: NavbarProps) => {
                     setToken("")
                     localStorage.removeItem("token")
                     toast("Just Logged Out ")
+                    router.push("/generate")
                 },
             },
             cancel: {

@@ -89,7 +89,18 @@ const google = async (req, res) => {
 
 const addSubscription = async (req, res) => {
   try {
-    const { userId, plan, price, period, credits, image, startDate, endDate, status, isTrial } = req.body;
+    const {
+      userId,
+      plan,
+      price,
+      period,
+      credits,
+      image,
+      startDate,
+      endDate,
+      status,
+      isTrial,
+    } = req.body;
 
     // Input validation
 
@@ -207,20 +218,23 @@ const PlaceOrderStripe = async (req, res) => {
     // });
 
     const session = await stripe.checkout.sessions.create({
-      success_url: "https://ai-image-generator-dasboard.vercel.app/payment-success",
-      cancel_url: "https://ai-image-generator-dasboard.vercel.app/payment-cancel",
+      success_url:
+        "https://ai-image-generator-dasboard.vercel.app/payment-success",
+      cancel_url:
+        "https://ai-image-generator-dasboard.vercel.app/payment-cancel",
       line_items,
       mode: "payment",
     });
 
-    session.success_url
+    session.success_url;
 
-    if (!session.cancel_url) {
+    if (session) {
       const updatedUser = await userModel.findByIdAndUpdate(
         userId,
         {
           $set: {
             subscription: subscriptionData,
+            payment: "false",
             updatedAt: new Date(),
           },
         },
@@ -242,6 +256,27 @@ const PlaceOrderStripe = async (req, res) => {
   }
 };
 
-const verifyStripe = async (req, res) => {};
+const verifyStripe = async (req, res) => {
+  const { userId, success, payment} = req.body;
+
+  try {
+    if (success === true) {
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userId,
+        {
+          $set: {payment: payment},
+        },
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+    }
+  } catch (error) {}
+};
 
 export { google, addSubscription, getUser, PlaceOrderStripe, verifyStripe };
