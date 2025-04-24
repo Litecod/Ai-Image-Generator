@@ -27,7 +27,7 @@ const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
   const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const { user, backendUrl, token, userId, fetchUser } = useContexts();
+  const { user, backendUrl, token, userId, fetchUser, imageGen } = useContexts();
 
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const Pricing = () => {
       return response.data;
     } catch (error) {
       toast.error('Subscription error:');
-      console.log(error) 
+      console.log(error)
       throw error;
     }
   }
@@ -89,7 +89,7 @@ const Pricing = () => {
       price: plan.price,
       period: plan.period,
       credits: plan.credit,
-      image: plan.image,
+      image: imageGen + plan.image,
       startDate: new Date(),
       status: 'active',
       isTrial: true
