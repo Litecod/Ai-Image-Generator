@@ -44,38 +44,38 @@ const Pricing = () => {
     setPriceTag(period);
   };
 
-  const addsubscription = async (plan: PricePlan) => {
+  // const addsubscription = async (plan: PricePlan) => {
 
-    const subscriptionData = {
-      plan: plan.name,
-      price: plan.price,
-      period: plan.period,
-      credits: plan.credit,
-      image: plan.image,
-      startDate: new Date(),
-      status: 'active',
-      isTrial: true
-    }
+  //   const subscriptionData = {
+  //     plan: plan.name,
+  //     price: plan.price,
+  //     period: plan.period,
+  //     credits: plan.credit,
+  //     image: plan.image,
+  //     startDate: new Date(),
+  //     status: 'active',
+  //     isTrial: true
+  //   }
 
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${backendUrl}/api/user/subscription`,
-        subscriptionData,
-        {
-          headers: { token },
-        }
-      );
-      if (response.data) {
-        console.log(response.data)
-      }
-      return response.data;
-    } catch (error) {
-      toast.error('Subscription error:');
-      console.log(error)
-      throw error;
-    }
-  }
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     const response = await axios.post(
+  //       `${backendUrl}/api/user/subscription`,
+  //       subscriptionData,
+  //       {
+  //         headers: { token },
+  //       }
+  //     );
+  //     if (response.data) {
+  //       console.log(response.data)
+  //     }
+  //     return response.data;
+  //   } catch (error) {
+  //     toast.error('Subscription error:');
+  //     console.log(error)
+  //     throw error;
+  //   }
+  // }
 
   const handleSubscribe = async (plan: PricePlan) => {
     fetchUser()

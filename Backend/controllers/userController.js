@@ -213,7 +213,9 @@ const PlaceOrderStripe = async (req, res) => {
       mode: "payment",
     });
 
-    if (session.success_url) {
+    session.success_url
+
+    if (!session.cancel_url) {
       const updatedUser = await userModel.findByIdAndUpdate(
         userId,
         {
