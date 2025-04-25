@@ -8,7 +8,7 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { toast } from "sonner";
 
 export default function PaymentSuccess() {
-  const { plan, token, imageGen } = useContexts()
+  const { plan, token, imageGen, backendUrl } = useContexts()
   const success = true;
   const payment = "true";
 
@@ -19,7 +19,7 @@ export default function PaymentSuccess() {
         return null
       }
 
-      const response = await axios.post("/api/user/verifyStripe", { success, payment }, { headers: { token } })
+      const response = await axios.post(backendUrl + "/api/user/verifyStripe", { success, payment }, { headers: { token } })
 
       if (response.data.success) {
         toast("Subscription Successful")

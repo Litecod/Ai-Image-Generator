@@ -84,7 +84,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `/api/user/getUsers`, {},
+        `${backendUrl}/api/user/getUsers`, {},
         {
           headers: { token },
         }

@@ -24,7 +24,7 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
-  const { imageGen, fetchUser, endDate, token, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial, prefix, setPrefix } = useContexts()
+  const { imageGen, fetchUser, endDate, token,backendUrl, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial, prefix, setPrefix } = useContexts()
 
   useEffect(() => {
     return () => {
@@ -48,7 +48,7 @@ const GeneratePage = () => {
 
     if (imageGen > 0) {
       try {
-        const response = await axios.post("/api/user/subscription", subscriptionData, { headers: { token } })
+        const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
         if (response.data.success) {
           console.log("updated")
         } else {
@@ -152,7 +152,7 @@ const GeneratePage = () => {
 
         if (imageGen > 0) {
           try {
-            const response = await axios.post("/api/user/subscription", subscriptionData, { headers: { token } })
+            const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
             if (response.data.success) {
               console.log("updated")
             } else {
