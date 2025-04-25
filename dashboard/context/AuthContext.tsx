@@ -133,7 +133,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         throw new Error("No user returned from Google sign-in");
       }
 
-      const { data } = await axios.post("/api/user/google", {
+      const { data } = await axios.post(backendUrl + "/api/user/google", {
         username: resultsFromGoogle.user.displayName,
         email: resultsFromGoogle.user.email,
       }, {
