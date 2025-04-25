@@ -48,7 +48,7 @@ const Navbar = ({ setClick }: NavbarProps) => {
               <button className="flex items-center gap-[0.2rem] sm:gap-[0.3rem] text-gray-200 border border-gray-600 py-[0.4rem] sm:py-[0.3rem] px-[0.4rem] sm:px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 text-[1rem]">{imageGen} <BsFillSuitDiamondFill /></button>
               <Link href={"/pricing"} className="sm:flex items-center gap-[0.3rem] text-[#8a40fc] py-[0.3rem] px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 bg-[#170039] hidden"><FaCrown /> <span className="hidden sm:block">Upgrade</span></Link>
               <img
-                src={user?.photoURL || img}
+                src={user?.photoURL || "../public/profile.png"}
                 alt="User profile"
                 className="rounded-full w-[2rem] h-[2rem] sm:w-[2.5rem] sm:h-[2.5rem]"
               />
