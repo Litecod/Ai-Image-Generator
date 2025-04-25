@@ -34,7 +34,7 @@ type AuthContextType = {
   setPrefix: React.Dispatch<SetStateAction<string>>,
   plan: any,
   setPlan: any,
-  payment: string
+  payment: string,
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -54,13 +54,14 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [payment, setPayment] = useState("true")
   const [endDate, setEndDate] = useState("")
   const [prefix, setPrefix] = useState("Create a 3D rendered image of a stylized cartoon character based on following prompt")
-  const backendUrl = "http://localhost:4800"
+  const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
   const [plan, setPlan] = useState({})
 
 
   useEffect(() => {
     const handleRefresh = () => {
       console.log('App refreshed or loaded');
+      console.log(user);
       fetchUser();
     };
     handleRefresh();
@@ -77,36 +78,46 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
 
   const fetchUser = async () => {
+
+
+
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `${backendUrl}/api/user/getUsers`, {},
+        `/api/user/getUsers`, {},
         {
           headers: { token },
         }
       );
-      
-      if (response.data.success) {
-        setUserId(response.data.userInfo._id)
-        setPayment(response.data.userInfo.payment)
-        setUusername(response.data.userInfo.subscription.plan)
-        setUserprice(response.data.userInfo.subscription.price)
-        setUserperiod(response.data.userInfo.subscription.period)
-        setUsercredit(response.data.userInfo.subscription.credits)
-        setUserStartDate(response.data.userInfo.subscription.startDate)
-        setStatus(response.data.userInfo.subscription.status)
-        setisTrial(response.data.userInfo.subscription.isTrial)
-        setEndDate(response.data.userInfo.subscription.endDate)
-        setPayment(response.data.userInfo.payment)
-        setPayment(response.data.userInfo.payment)
-        if (response.data.userInfo.payment === "true") {
-          setImageGen(response.data.userInfo.subscription.image)
-        } else if(response.data.userInfo.payment === "false") {
-          setImageGen(0)
-          toast("Subscribe to generate")
+
+      onAuthStateChanged(auth, (currentUser) => {
+
+
+        if (response.data.success) {
+          setUser(currentUser);
+          setUserId(response.data.userInfo._id)
+          setPayment(response.data.userInfo.payment)
+          setUusername(response.data.userInfo.subscription.plan)
+          setUserprice(response.data.userInfo.subscription.price)
+          setUserperiod(response.data.userInfo.subscription.period)
+          setUsercredit(response.data.userInfo.subscription.credits)
+          setUserStartDate(response.data.userInfo.subscription.startDate)
+          setStatus(response.data.userInfo.subscription.status)
+          setisTrial(response.data.userInfo.subscription.isTrial)
+          setEndDate(response.data.userInfo.subscription.endDate)
+          setPayment(response.data.userInfo.payment)
+          setPayment(response.data.userInfo.payment)
+          console.log(true)
+          if (payment === "true") {
+            setImageGen(response.data.userInfo.subscription.image)
+          } else {
+            setImageGen(0)
+            toast("Subscribe to generate")
+          }
         }
-      }
-      return response.data;
+
+        return response.data;
+      });
     } catch (error) {
       console.error('Unexpected error:', error);
     }
@@ -122,7 +133,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         throw new Error("No user returned from Google sign-in");
       }
 
-      const { data } = await axios.post(backendUrl + "/api/user/google", {
+      const { data } = await axios.post("/api/user/google", {
         username: resultsFromGoogle.user.displayName,
         email: resultsFromGoogle.user.email,
       }, {
@@ -156,15 +167,16 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //     console.log(currentUser)
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [token]);
 
   const value: AuthContextType = {
     google,
@@ -188,7 +200,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setPrefix,
     plan,
     setPlan,
-    payment
+    payment,
   };
 
   return (

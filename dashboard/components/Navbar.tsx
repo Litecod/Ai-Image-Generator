@@ -7,6 +7,8 @@ import { HiOutlineSquare3Stack3D } from "react-icons/hi2";
 import { FaCrown } from "react-icons/fa";
 import { useContexts } from "@/context/AuthContext";
 import { BsFillSuitDiamondFill } from "react-icons/bs";
+import { useEffect } from "react";
+import img from "@/public/profile.png"
 
 interface NavbarProps {
   setClick?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +17,10 @@ interface NavbarProps {
 const Navbar = ({ setClick }: NavbarProps) => {
   const { user, token, imageGen } = useContexts();
   const isAuthenticated = token === "";
+
+  useEffect(() => {
+
+  },[])
   return (
     <div className="fixed w-full mx-auto max-w-[1550px] px-[0.8rem] md:px-[2rem] lg:px-[1.5rem] py-[1rem] text-[#fff] bg-[#000] z-20 ">
       <div className="flex justify-between items-center">
@@ -42,7 +48,7 @@ const Navbar = ({ setClick }: NavbarProps) => {
               <button className="flex items-center gap-[0.2rem] sm:gap-[0.3rem] text-gray-200 border border-gray-600 py-[0.4rem] sm:py-[0.3rem] px-[0.4rem] sm:px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 text-[1rem]">{imageGen} <BsFillSuitDiamondFill /></button>
               <Link href={"/pricing"} className="sm:flex items-center gap-[0.3rem] text-[#8a40fc] py-[0.3rem] px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 bg-[#170039] hidden"><FaCrown /> <span className="hidden sm:block">Upgrade</span></Link>
               <img
-                src={user?.photoURL || "/default-avatar.png"}
+                src={user?.photoURL || img}
                 alt="User profile"
                 className="rounded-full w-[2rem] h-[2rem] sm:w-[2.5rem] sm:h-[2.5rem]"
               />

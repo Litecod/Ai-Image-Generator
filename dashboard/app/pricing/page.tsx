@@ -27,7 +27,7 @@ const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
   const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const { user, backendUrl, token, userId, fetchUser, imageGen, setPlan } = useContexts();
+  const { user, token, userId, fetchUser, imageGen, setPlan } = useContexts();
 
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Pricing = () => {
     }
 
     try {
-      const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+      const response = await axios.post("/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
       if (response.data.success) {
         const { session_url } = response.data
         window.location.replace(session_url)
