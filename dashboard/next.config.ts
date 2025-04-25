@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
-        destination: "https://ai-image-generator-backend-two.vercel.app//api/:path*",
+        source: "/backend-api/:path*",
+        destination: "https://ai-image-generator-backend-two.vercel.app/api/:path*",
       },
     ];
   },
