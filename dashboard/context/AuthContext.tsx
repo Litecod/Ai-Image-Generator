@@ -67,6 +67,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (pathname === '/') {
       setLogin(false);
+    }else if (pathname === "/generate" || pathname === "/pricing") {
+      setLogin(true)
     }
   }, [pathname, setLogin]);
 
