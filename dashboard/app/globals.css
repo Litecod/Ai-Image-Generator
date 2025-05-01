@@ -144,32 +144,75 @@ body {
 
 /* For the entire scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* Vertical scrollbar width */
-  height: 10px; /* Horizontal scrollbar height */
+  width: 10px;
+  height: 10px; 
 }
 
-/* Track (background) */
 ::-webkit-scrollbar-track {
-  background: #000; 
+  background: #000;
   border-radius: 5px;
 }
 
-/* Handle (thumb) */
 ::-webkit-scrollbar-thumb {
-  background: #000; 
+  background: #000;
   border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #000; 
+  background: #000;
 }
 
 .con {
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
 }
 
 .con::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+}
+
+@font-face {
+  font-family: "Relative-Bold";
+  src: url("/frontend/public/fonts/Relative-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/**   font-family: "Lato", sans-serif;**/
+.scroll {
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+  mask: linear-gradient(90deg, transparent, black 20%, black 80%, transparent);
+}
+
+.animate-infinite {
+  animation: scrolls 100s linear infinite;
+}
+
+.animate-infinit {
+  animation: scrollss 55s linear infinite;
+}
+
+@keyframes scrolls {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 20px));
+  }
+}
+
+@keyframes scrollss {
+  0% {
+    transform: translateX(-50);
+  }
+  100% {
+    transform: translateX(calc(-50% - 20px));
+  }
 }

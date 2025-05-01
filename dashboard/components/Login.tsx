@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import img from "@/public/000.jpg"
 
 export default function LoginPage() {
-  const { google } = useContexts();
+  const { google, login } = useContexts();
 
   const googleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="absolute w-full top-0 left-0 min-h-screen flex items-center justify-center bg-[#ffffff56] bg-cover bg-center p-4 z-30">
+    <div className={`absolute w-full top-0 left-0 min-h-screen  items-center justify-center bg-[#ffffff56] bg-cover bg-center p-4 z-30 ${login ? "flex" : "hidden"}`}>
 
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 

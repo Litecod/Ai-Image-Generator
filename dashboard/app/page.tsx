@@ -1,18 +1,19 @@
-"use client";
-
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect} from "react";
+import CountUps from "@/components/componen/CountUp";
+import Footer from "@/components/componen/Footer";
+import Hero from "@/components/componen/Hero";
+import Navbar from "@/components/componen/Navbar";
+import Pricing from "@/components/componen/Pricing";
+import Reviews from "@/components/componen/Reviews";
 
 export default function Home() {
-  const show = "";
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (pathname === "/" || show === "") {
-      router.push("/generate");
-    }
-  }, [pathname, show, router]);
-
-  return <div className="">{show}</div>;
+  return (
+    <div className=" w-full bg-[#000] absolute text-[#fff] top-0 left-0 h-screen z-40 overflow-y-scroll ">
+      <Navbar />
+      <Hero />
+      <CountUps />
+      <Pricing />
+      <Reviews />
+      <Footer />
+    </div>
+  );
 }

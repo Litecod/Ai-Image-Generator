@@ -11,6 +11,7 @@ import {
 import { auth } from '@/utils/firebase';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { usePathname } from 'next/navigation';
 
 type AuthContextType = {
   google: () => Promise<void>;
@@ -32,6 +33,8 @@ type AuthContextType = {
   endDate: string,
   prefix: string,
   setPrefix: React.Dispatch<SetStateAction<string>>,
+  login: boolean,
+  setLogin: React.Dispatch<SetStateAction<boolean>>,
   plan: any,
   setPlan: any,
   payment: string,
@@ -40,6 +43,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string>("");
   const [imageGen, setImageGen] = useState<number>(0);
@@ -51,11 +55,20 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [userStartDate, setUserStartDate] = useState("")
   const [status, setStatus] = useState("")
   const [isTrial, setisTrial] = useState(true)
+  const [login, setLogin] = useState(false)
   const [payment, setPayment] = useState("true")
   const [endDate, setEndDate] = useState("")
   const [prefix, setPrefix] = useState("Create a 3D rendered image of a stylized cartoon character based on following prompt")
   const backendUrl = "https://ai-image-generator-backend-two.vercel.app"
   const [plan, setPlan] = useState({})
+
+
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setLogin(false);
+    }
+  }, [pathname, setLogin]);
 
 
   useEffect(() => {
@@ -201,6 +214,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     plan,
     setPlan,
     payment,
+    login,
+    setLogin,
   };
 
   return (

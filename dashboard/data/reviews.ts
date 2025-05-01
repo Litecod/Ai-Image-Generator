@@ -1,68 +1,76 @@
-import reveiw from "@/public/review.png";
+import reveiw from "@/public/landingpageImage/review.png";
+import one from "@/public/landingpageImage/review1.webp";
+import two from "@/public/landingpageImage/review2.png";
+import three from "@/public/landingpageImage/review3.png";
+import four from "@/public/landingpageImage/review4.webp";
+import five from "@/public/landingpageImage/review5.png";
+import six from "@/public/landingpageImage/review6.png";
+import seven from "@/public/landingpageImage/review7.png";
+import eight from "@/public/landingpageImage/review8.jpg";
 
 const reviewss = [
   {
     id: 1,
-    name: "Sun Wukong",
-    desc: "ImagineArt is the best AI Image generator! in seconds. It helps me overcome creative block and explore new artistic directions.",
-    image: reveiw,
-    job: "Video Editor",
+    name: "Sophia Rae",
+    desc: "Cartoonify 3D brings my interior concepts to life in seconds. Visualizing room layouts and playing with materials has never been this easy",
+    image: six,
+    job: "Interior Designe",
   },
   {
     id: 2,
-    name: "Asia Umar",
-    desc: "ImagineArt is the best AI Image generator! I can brainstorm ideas and creative block and explore new artistic directions.",
-    image: reveiw,
-    job: "Product Designer",
+    name: "Liam Cortez",
+    desc: "As a game developer, Cartoonify 3D speeds up my concept art process. I can test character outfits and accessories without sketching from scratch.",
+    image: four,
+    job: "Game Developer",
   },
   {
     id: 3,
-    name: "Light samuel",
-    desc: "ImagineArt is the best AI Image generator! I can brainstorm ideas and get stunning visuals in seconds. It helps me overcome creative block and explore new artistic directions.",
-    image: reveiw,
-    job: "Artist",
+    name: "Maya Blake",
+    desc: "I use Cartoonify 3D to pitch visual storyboards to clients. It's like having a digital assistant for scene visualization.",
+    image: one,
+    job: "Film Director",
   },
   {
     id: 4,
-    name: "Sep Authur",
-    desc: "AI Image generator! I can brainstorm ideas and get stunning visuals in seconds. It helps me overcome creative block and explore new artistic directions.",
+    name: "Jordan Miles",
+    desc: "Cartoonify 3D helps me mock up album art concepts quickly. It's a fun way to explore themes and aesthetics before jumping into Photoshop.",
     image: reveiw,
-    job: "PPP",
+    job: "Music Artist",
   },
   {
     id: 5,
-    name: "Tims Seth",
-    desc: "ImagineArt is the best AI Image generator! I can brainstorm ideas and get stunning helps me overcome creative block and explore new artistic directions.",
-    image: reveiw,
-    job: "Player",
+    name: "Riley Knox",
+    desc: "This tool is perfect for creating fast outfit ideas for my client's photo shoots. The details are sharp and the styles are fresh!",
+    image: five,
+    job: "Fashion Stylist",
   },
   {
     id: 6,
-    name: "Samuel Inakie",
-    desc: "I can brainstorm ideas and get stunning visuals in seconds. It helps me overcome creative block and explore new artistic directions.",
-    image: reveiw,
-    job: "Artist",
+    name: "Noah Lee",
+    desc: "Cartoonify 3D gives me creative freedom to prototype furniture designs visually before heading into production.",
+    image: three,
+    job: "Product Designer",
   },
   {
     id: 7,
-    name: "Moss Find",
-    desc: "It helps me overcome creative block and explore new artistic directions.",
-    image: reveiw,
-    job: "Musician",
+    name: "Harper Elms",
+    desc: "I use Cartoonify 3D for building visual references in my fantasy novels. It helps me map out characters' looks and gear.",
+    image: two,
+    job: "Author",
   },
   {
     id: 8,
-    name: "Katherin Cent",
-    desc: "ImagineArt is the best AI Image generator! I can brainstorm ideas and get stunning visuals in seconds. ",
-    image: reveiw,
-    job: "Web Developer",
+    name: "Zara Quin",
+    desc: "It's like Pinterest with a purpose. I build entire vibe boards for my branding projects in half the time using Cartoonify 3D.",
+    image: seven,
+    job: "Brand Strategist",
   },
   {
     id: 9,
-    name: "Sarah Peter",
-    desc: "ImagineArt is like having a virtual mood board at my fingertips. I can generate different clothing styles and fabric textures, helping me create unique and cohesive fashion collections.",
-    image: reveiw,
-    job: "Artist",
+    name: "Avery Chen",
+    desc: "I'm amazed by how useful Cartoonify 3D is for planning cosplay designs. It saves me hours of drawing and testing fabrics.",
+    image: eight,
+    job: "Cosplayer",
   },
 ];
 

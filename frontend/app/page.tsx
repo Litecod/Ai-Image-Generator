@@ -1,8 +1,8 @@
-import CountUps from "@/components/CountUp";
-import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
-import Pricing from "@/components/Pricing";
-import Reviews from "@/components/Reviews";
+import CountUps from "@/componen/CountUp";
+import Footer from "@/componen/Footer";
+import Hero from "@/componen/Hero";
+import Pricing from "@/componen/Pricing";
+import Reviews from "@/componen/Reviews";
 
 export default function Home() {
   return (
