@@ -20,7 +20,7 @@ const Hero = () => {
                     <Link href="/generate" onClick={() => setLogin(true)} className="cursor-pointer">
                         <div className="cursor-pointer bg-gradient-to-r from-[#4802b1] to-[#7800f0] max-w-[16rem] md:max-w-[17rem] mx-auto rounded-[20rem] mt-[2rem] border-[4px] border-[#00000034]">
                             <button className="border-animate w-full rounded-[20rem] ">
-                                <div className="py-[1rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] md:text-[1rem] max-w-[13rem] w-full mx-auto">
+                                <div className="py-[1rem] flex gap-2 items-center px-[2rem] rounded-[20rem] text-[0.9rem] md:text-[1rem] max-w-[11rem] md:max-w-[13rem] w-full mx-auto">
                                     <HiOutlineSparkles className="md:text-[1.7rem] star" /> Get Started
                                 </div>
                             </button>
