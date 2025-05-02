@@ -35,8 +35,14 @@ const Pricing = () => {
                 <div className="mt-[4rem]">
                     <div className="flex p-[0.5rem] bg-[#1d1d1d] rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth">
                         <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "weekly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("weekly")}>Weekly</p>
-                        <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "monthly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("monthly")}>Monthly</p>
-                        <p className={`px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "yearly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("yearly")}>Yearly</p>
+                        <p className={` relative px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "monthly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("monthly")}>Monthly
+                            <p className="absolute -top-5 text-xs font-semibold rounded-full px-2 py-1 bg-[#5a0000] text-[#fff] ">
+                                2% OFF
+                            </p>
+                        </p>
+                        <p className={` relative px-[1rem] py-[0.6rem] rounded-[20rem] ${priceTag === "yearly" && "bg-[#fff] text-[#000]"}`} onClick={() => setPriceTag("yearly")}>Yearly
+                            <p className="absolute top-[-1.3rem] text-xs font-semibold rounded-full px-2 py-1 bg-[#5a0000] text-[#fff] right-2">5% OFF</p>
+                        </p>
                     </div>
                 </div>
                 <div className="mt-[2rem] ">

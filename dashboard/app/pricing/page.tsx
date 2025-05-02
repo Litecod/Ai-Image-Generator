@@ -27,7 +27,7 @@ const Pricing = () => {
   const [priceTag, setPriceTag] = useState<PricePeriod>("weekly");
   const [price, setPrice] = useState<PricePlan[]>([]);
   const [loading, setLoading] = useState(false);
-  const { user, token,backendUrl, userId, fetchUser, imageGen, setPlan } = useContexts();
+  const { user, token, backendUrl, userId, fetchUser, imageGen, setPlan } = useContexts();
 
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Pricing = () => {
     }
 
     try {
-      const response = await axios.post( backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
+      const response = await axios.post(backendUrl + "/api/user/placeOrderStripe", subscriptionData, { headers: { token } })
       if (response.data.success) {
         const { session_url } = response.data
         window.location.replace(session_url)
@@ -114,7 +114,7 @@ const Pricing = () => {
       <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-black border border-gray-900  rounded-xl h-full px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[5rem] sm:py-[1rem] ">
         <div className="max-w-6xl mx-auto">
           <div className="flex p-[0.5rem] bg-gray-900 border border-gray-800 rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth text-white">
-            {(["weekly", "monthly", "yearly"] as PricePeriod[]).map((period) => (
+            {/* {(["weekly", "monthly", "yearly"] as PricePeriod[]).map((period) => (
               <button
                 key={period}
                 className={`px-[1rem] py-[0.6rem] rounded-[20rem] capitalize transition-colors ${priceTag === period ? "bg-gray-200 text-black" : "hover:bg-gray-700"
@@ -123,7 +123,29 @@ const Pricing = () => {
               >
                 {period}
               </button>
-            ))}
+            ))} */}
+
+            <button
+              className={`px-[1rem] py-[0.6rem] rounded-[20rem] capitalize transition-colors ${priceTag === "weekly" ? "bg-gray-200 text-black" : "hover:bg-gray-700"
+                }`}
+              onClick={() => handlePeriodChange("weekly")}
+            >
+              weekly
+            </button>
+            <button
+              className={`px-[1rem] py-[0.6rem] rounded-[20rem] capitalize transition-colors ${priceTag === "monthly" ? "bg-gray-200 text-black" : "hover:bg-gray-700"
+                }`}
+              onClick={() => handlePeriodChange("monthly")}
+            >
+              monthly
+            </button>
+            <button
+              className={`px-[1rem] py-[0.6rem] rounded-[20rem] capitalize transition-colors ${priceTag === "yearly" ? "bg-gray-200 text-black" : "hover:bg-gray-700"
+                }`}
+              onClick={() => handlePeriodChange("yearly")}
+            >
+              yearly
+            </button>
           </div>
 
           {/* Pricing cards */}
