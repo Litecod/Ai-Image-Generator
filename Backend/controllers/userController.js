@@ -54,7 +54,7 @@ const google = async (req, res) => {
         price: 0,
         period: "",
         credits: "",
-        image: 3,
+        image: 1,
         startDate: new Date(),
         endDate: "none",
         status: "inactive",

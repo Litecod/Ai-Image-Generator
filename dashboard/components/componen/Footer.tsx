@@ -16,14 +16,14 @@ const Footer = () => {
             </div>
 
             <div className="mt-[5rem] flex flex-col sm:flex-row justify-between flex-wrap">
-                <div className="flex gap-4">
+                <div className="flex gap-4 opacity-0">
                     <FaFacebook />
                     <FaInstagram />
                     <FaGithub />
                     <FaDiscord />
                 </div>
                 <div className=" mt-[2rem] md:mt-0">
-                    © 2025 <span className="underline text-[#8a40fc]">LiteCode</span>. All rights reserved.
+                    © 2025 <span className="underline text-[#8a40fc]">Cartoonify 3D</span>. All rights reserved.
                 </div>
             </div>
         </div>
