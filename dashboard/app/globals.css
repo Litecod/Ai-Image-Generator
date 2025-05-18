@@ -216,3 +216,35 @@ body {
     transform: translateX(calc(-50% - 20px));
   }
 }
+
+@keyframes liquid {
+  0%, 100% {
+    filter: url('#liquid');
+  }
+  50% {
+    filter: url('#liquid2');
+  }
+}
+
+.animate-liquid {
+  animation: liquid 3s ease-in-out infinite;
+}
+
+@media (min-width: 2000px) {
+  .apple {
+    margin-left: 27rem;
+    margin-right: 27rem;
+  }
+}
+@media (min-width: 2333px) {
+  .apple {
+    margin-left: 35rem;
+    margin-right: 35rem;
+  }
+}
+@media (min-width: 2700px) {
+  .apple {
+    margin-left: 43rem;
+    margin-right: 43rem;
+  }
+}

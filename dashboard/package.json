@@ -12,6 +12,7 @@
     "@stripe/stripe-js": "^7.1.0",
     "axios": "^1.8.4",
     "firebase": "^11.6.0",
+    "framer-motion": "^12.12.1",
     "next": "15.2.1",
     "react": "^19.0.0",
     "react-countup": "^6.5.3",

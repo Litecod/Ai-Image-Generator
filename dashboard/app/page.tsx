@@ -4,6 +4,8 @@ import Hero from "@/components/componen/Hero";
 import Navbar from "@/components/componen/Navbar";
 import Pricing from "@/components/componen/Pricing";
 import Reviews from "@/components/componen/Reviews";
+import Animated from "@/components/componen/Animated";
+import BestWay from "@/components/componen/BestWay";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
         <Navbar />
         <Hero />
         <CountUps />
+        <Animated />
+        <BestWay />
         <Pricing />
         <Reviews />
         <Footer />
