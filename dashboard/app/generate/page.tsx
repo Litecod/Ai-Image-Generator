@@ -198,7 +198,7 @@ const GeneratePage = () => {
 
   return (
     <div className={`sm:pt-[5rem] min-h-screen h-screen `}>
-      <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-gradient-to-br from-gray-950 via-gray-900 to-black rounded-xl h-full border border-gray-900 ${cartoon !== "" ? "pt-[8rem]" : " pt-[10rem] sm:pt-[1rem]"}`}>
+      <div className={`relative overflow-hidden px-[0.8rem] md:px-[2rem] py-[4rem] sm:py-0  bg-[url(../public/backgrounds.png)]  rounded-xl h-full border border-gray-900 ${cartoon !== "" ? "pt-[8rem]" : " pt-[10rem] sm:pt-[1rem]"}`}>
         <div className="container mx-auto sm:p-4  sm:pt-[4rem]">
           {cartoon === "" ? "" : (
             <button

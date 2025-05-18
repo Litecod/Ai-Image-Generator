@@ -9,7 +9,7 @@ import BestWay from "@/components/componen/BestWay";
 
 export default function Home() {
   return (
-    <div className=" w-full bg-[#000] absolute text-[#fff] top-0 left-0 h-screen z-40 overflow-y-scroll">
+    <div className=" w-full bg-[#000] absolute text-[#fff] top-0 left-0 h-screen z-40 overflow-y-scroll max-2xl:overflow-x-hidden">
       <div className="w-full max-w-[1550px] mx-auto">
         <Navbar />
         <Hero />

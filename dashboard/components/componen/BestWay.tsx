@@ -7,7 +7,7 @@ import Header from './Header'
 const BestWay = () => {
     return (
         <div className='relative px-[0.8rem] md:px-[2rem] lg:px-[3rem] pt-[5rem] mb-[2rem] bg-[url(../public/landingpageImage/download.png)] text-[#fff] md:overflow-x-hidden lg:overflow-visible'>
-            <div className="max-w-[84rem] mx-auto">
+            <div className="max-w-[84rem] mx-auto max-sm:overflow-hidden">
                 <div className="z-10 text-center">
                     <Header icons={GiDiamondTrophy} details={"How to use"} clas='' />
                     <h2 className='text-[2rem] md:text-[3rem] text-center lg:max-w-[39rem] mx-auto head font-medium'>Easily Turn Your Images into 3D Cartoon</h2>
