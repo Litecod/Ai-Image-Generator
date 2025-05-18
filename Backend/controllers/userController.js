@@ -219,9 +219,9 @@ const PlaceOrderStripe = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       success_url:
-        "https://ai-image-generator-dasboard.vercel.app/payment-success",
+        "https://toonify.design/payment-success",
       cancel_url:
-        "https://ai-image-generator-dasboard.vercel.app/payment-cancel",
+        "https://toonify.design/payment-cancel",
       line_items,
       mode: "payment",
     });
