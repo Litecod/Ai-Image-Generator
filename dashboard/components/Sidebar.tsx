@@ -76,7 +76,7 @@ const Sidebar = ({ click }: NavbarProps) => {
     }
     return (
         <div className="max-w-[1550px] w-full absolute sm:fixed z-10 sm:-z-0 con">
-            <div className={` w-full max-h-screen sm:min-h-screen sm:w-[20%] md:w-[30%] lg:w-[24%] xl:w-[20%] pt-[5rem] duration-150 ${click === false ? "mt-[-450px] sm:mt-0 opacity-0 sm:opacity-100" : "opacity-100 mt-0"} ${pathname.includes("generate") ? "bg-[#000] sm:bg-trasparent" : "bg-[#000]"}`}>
+            <div className={` w-full max-h-screen sm:min-h-screen sm:w-[20%] md:w-[30%] lg:w-[24%] xl:w-[20%] pt-[5rem] duration-150 ${click === false ? "mt-[-450px] sm:mt-0 opacity-0 sm:opacity-100" : "opacity-100 mt-0"} ${pathname.includes("generate") ? "max-sm:bg-[#000] bg-trasparent" : "bg-[#000]"}`}>
                 <div className="flex flex-col gap-6 pt-6 py-[0.7rem] sm:py-auto px-[0.7rem] sm:px-[1rem] text-[15px] b">
                     <Link href={"/generate"} className={`w-full px-[1rem] py-[0.5rem] rounded-xl ${pathname.includes("generate") && "text-white bg-gray-900 border border-gray-700"}`} >
                         <div className="flex gap-2 items-center"><RiAiGenerate2 /><span className='sm:hidden md:block'>Generate</span></div>
@@ -102,7 +102,7 @@ const Sidebar = ({ click }: NavbarProps) => {
                             <Image onClick={handleGta} src={gta} alt='Image' className='w-[50%] max-sm:object-cover sm:w-[3.5rem] md:w-[7rem] h-[7rem] sm:h-[8rem] rounded-xl cursor-pointer md:object-cover' />
                         </div>
                     </div>
-                    <button onClick={logout} className={`w-full sm:w-[16%] md:w-[25%] lg:w-[20%] xl:w-[17%] sm:absolute bottom-0 px-[1rem] py-[0.5rem] rounded-xl text-white bg-gray-900 border border-gray-700 cursor-pointer ${!token && "hidden"}`} >
+                    <button onClick={logout} className={`w-full sm:w-[16%] botom md:w-[25%] lg:w-[20%] xl:w-[17%] sm:absolute bottom-0 px-[1rem] py-[0.5rem] rounded-xl text-white bg-gray-900 border border-gray-700 cursor-pointer ${!token && "hidden"}`} >
                         <div className="flex gap-2 items-center"><CiLogout /><span className='sm:hidden md:block'>Logout</span></div>
                     </button>
                 </div>

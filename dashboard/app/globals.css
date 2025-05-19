@@ -238,6 +238,9 @@ body {
   .heig {
     height: 100vh;
   }
+  .botom {
+    bottom: 3rem;
+  }
 }
 @media (min-width: 2333px) {
   .apple {
