@@ -24,6 +24,7 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
+  const numberss = 0
   const { imageGen, fetchUser, endDate, token, backendUrl, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial, prefix, setPrefix, payment } = useContexts()
 
   useEffect(() => {
@@ -180,9 +181,9 @@ const GeneratePage = () => {
 
           // }
         }
-      } else {
-        toast("Purchase Your Subscription to Generate, Your free trials are used")
       }
+    } else {
+      toast("Purchase Your Subscription to Generate, Your free trials are used")
     }
   };
 

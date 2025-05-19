@@ -32,7 +32,7 @@ body {
   100% {
     width: 100%;
   }
-}
+} 
 .animate-spin-slow {
   animation: spin-slow 3s linear infinite;
 }
