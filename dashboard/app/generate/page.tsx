@@ -24,7 +24,7 @@ const GeneratePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const [cartoon, setCartoon] = useState("")
-  const { imageGen, fetchUser, endDate, token,backendUrl, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial, prefix, setPrefix } = useContexts()
+  const { imageGen, fetchUser, endDate, token, backendUrl, uusername, userprice, userperiod, usercredit, userStartDate, status, isTrial, prefix, setPrefix, payment } = useContexts()
 
   useEffect(() => {
     return () => {
@@ -46,17 +46,19 @@ const GeneratePage = () => {
       image: 0,
     }
 
-    if (imageGen > 0) {
-      try {
-        const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
-        if (response.data.success) {
-          console.log("updated")
-        } else {
-          toast.error(response.data.message)
+    if (payment === "true") {
+      if (imageGen > 0) {
+        try {
+          const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
+          if (response.data.success) {
+            console.log("updated")
+          } else {
+            toast.error(response.data.message)
+          }
+        } catch (error) {
+          toast.error('update error:');
+          console.log(error)
         }
-      } catch (error) {
-        toast.error('update error:');
-        console.log(error)
       }
     }
   }
@@ -124,61 +126,63 @@ const GeneratePage = () => {
 
   const generateAllCartoons = async () => {
     fetchUser()
-    if (imageGen > 0) {
+    if (payment === "true") {
+      if (imageGen > 0) {
 
-      if (images.length === 0 || isGeneratingAll) return;
+        if (images.length === 0 || isGeneratingAll) return;
 
-      setIsGeneratingAll(true);
-      try {
-        for (let i = 0; i < images.length; i++) {
-          if (!images[i].cartoonUrl) {
-            await generateCartoon(i);
-          }
-        }
-      } finally {
-        setIsGeneratingAll(false);
-
-        const subscriptionData = {
-          plan: uusername,
-          price: userprice,
-          period: userperiod,
-          credits: usercredit,
-          image: imageGen - 1,
-          startDate: userStartDate,
-          endDate: endDate,
-          status: status,
-          isTrial: isTrial
-        }
-
-        if (imageGen > 0) {
-          try {
-            const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
-            if (response.data.success) {
-              console.log("updated")
-            } else {
-              toast.error(response.data.message)
+        setIsGeneratingAll(true);
+        try {
+          for (let i = 0; i < images.length; i++) {
+            if (!images[i].cartoonUrl) {
+              await generateCartoon(i);
             }
-          } catch (error) {
-            toast.error('Coundn\'t update');
-            console.log(error)
           }
+        } finally {
+          setIsGeneratingAll(false);
+
+          const subscriptionData = {
+            plan: uusername,
+            price: userprice,
+            period: userperiod,
+            credits: usercredit,
+            image: imageGen - 1,
+            startDate: userStartDate,
+            endDate: endDate,
+            status: status,
+            isTrial: isTrial
+          }
+
+          if (imageGen > 0) {
+            try {
+              const response = await axios.post(backendUrl + "/api/user/subscription", subscriptionData, { headers: { token } })
+              if (response.data.success) {
+                console.log("updated")
+              } else {
+                toast.error(response.data.message)
+              }
+            } catch (error) {
+              toast.error('Coundn\'t update');
+              console.log(error)
+            }
+          }
+
+          //add photo
+          // try {
+          //   const photo = cartoon
+          //   const response = await axios.post(backendUrl + "/api/user/addphoto", photo, { headers: { token } })
+          //   if (response.data.success) {
+          //     console.log("updated")
+          //   } else {
+          //     toast.error(response.data.message)
+          //   }
+          // } catch (error) {
+
+          // }
         }
-
-        //add photo
-        // try {
-        //   const photo = cartoon
-        //   const response = await axios.post(backendUrl + "/api/user/addphoto", photo, { headers: { token } })
-        //   if (response.data.success) {
-        //     console.log("updated")
-        //   } else {
-        //     toast.error(response.data.message)
-        //   }
-        // } catch (error) {
-
-        // }
+      } else {
+        toast("Purchase Your Subscription to Generate, Your free trials are used")
       }
-    } else {
-      toast("Purchase Your Subscription to Generate, Your free trials are used")
     }
   };
 
@@ -192,7 +196,7 @@ const GeneratePage = () => {
   };
 
   const downlo = () => {
-    downloadImage(cartoon, "Cartoonify_Img.png" );
+    downloadImage(cartoon, "Cartoonify_Img.png");
     console.log(cartoon)
   }
 

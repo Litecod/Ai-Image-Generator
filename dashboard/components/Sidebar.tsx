@@ -76,7 +76,7 @@ const Sidebar = ({ click }: NavbarProps) => {
     }
     return (
         <div className="max-w-[1550px] w-full absolute sm:fixed z-10 sm:-z-0 con">
-            <div className={` w-full max-h-screen sm:min-h-screen sm:w-[20%] md:w-[30%] lg:w-[24%] xl:w-[20%]  pt-[5rem]  overflow-x-hidden duration-150 ${click === false ? "mt-[-450px] sm:mt-0 opacity-0 sm:opacity-100" : "opacity-100 mt-0"} ${pathname.includes("generate") ? "bg-trasparent" : "bg-[#000]"}`}>
+            <div className={` w-full max-h-screen sm:min-h-screen sm:w-[20%] md:w-[30%] lg:w-[24%] xl:w-[20%]  pt-[5rem]   duration-150 ${click === false ? "mt-[-450px] sm:mt-0 opacity-0 sm:opacity-100" : "opacity-100 mt-0"} ${pathname.includes("generate") ? "bg-trasparent" : "bg-[#000]"}`}>
                 <div className="flex flex-col gap-6 pt-6 py-[0.7rem] sm:py-auto px-[0.7rem] sm:px-[1rem] text-[15px] b">
                     <Link href={"/generate"} className={`w-full px-[1rem] py-[0.5rem] rounded-xl ${pathname.includes("generate") && "text-white bg-gray-900 border border-gray-700"}`} >
                         <div className="flex gap-2 items-center"><RiAiGenerate2 /><span className='sm:hidden md:block'>Generate</span></div>

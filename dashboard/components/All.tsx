@@ -26,8 +26,8 @@ const All = ({ children }: any) => {
                 </AuthContextProvider>
             </div>
 
-            <div className={`absoulute w-full h-screen z-0 top-0 left-0 ${pathname.includes("generate") ? "bg-[url(@/public/backgrounds.png)]" : "bg-[#000]"}`}>
-                <div className={`absoulute w-full h-screen z-10 top-0 left-0 bg-[#000000ac]`}></div>
+            <div className={`absoulute w-full h-screen z-0 top-0 left-0 ${pathname.includes("generate") ? "backgrounds" : "bg-[#000]"}`}>
+                <div className={`absoulute w-full h-screen z-10 top-0 left-0 bg-gradient-to-br from-[#000000ca] via-[#090909c4] to-[#000000ca]`}></div>
             </div>
 
 

@@ -127,7 +127,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             setImageGen(response.data.userInfo.subscription.image)
           } else {
             setImageGen(0)
-            toast("Subscribe to generate")
           }
         }
 

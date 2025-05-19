@@ -251,3 +251,7 @@ body {
     margin-right: 43rem;
   }
 }
+
+.backgrounds {
+  background: url(../public/backgrounds.png);
+}

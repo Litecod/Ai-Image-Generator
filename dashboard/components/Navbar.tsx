@@ -16,7 +16,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({ setClick }: NavbarProps) => {
-  const { user, token, imageGen } = useContexts();
+  const { user, token, imageGen, payment } = useContexts();
   const isAuthenticated = token === "";
   const pathname = usePathname()
 
@@ -24,7 +24,7 @@ const Navbar = ({ setClick }: NavbarProps) => {
 
   },[])
   return (
-    <div className={`fixed w-full mx-auto max-w-[1550px] px-[0.8rem] md:px-[2rem] lg:px-[1.5rem] py-[1rem] text-[#fff]  z-20 ${pathname.includes("generate") ? "bg-trasparent" : "bg-[#000]"} `}>
+    <div className={`fixed w-full mx-auto max-w-[1550px] px-[0.8rem] md:px-[2rem] lg:px-[1.5rem] py-[1rem] text-[#fff]  z-20 ${pathname.includes("generate") ? "bg-[#00000079]" : "bg-[#000]"} `}>
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <Image
@@ -47,7 +47,7 @@ const Navbar = ({ setClick }: NavbarProps) => {
           ) : (
 
             <div className="flex items-center gap-[0.3rem] sm:gap-[1rem]">
-              <button className="flex items-center gap-[0.2rem] sm:gap-[0.3rem] text-gray-200 border border-gray-600 py-[0.4rem] sm:py-[0.3rem] px-[0.4rem] sm:px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 text-[1rem]">{imageGen} <BsFillSuitDiamondFill /></button>
+              <button className="flex items-center gap-[0.2rem] sm:gap-[0.3rem] text-gray-200 border border-gray-600 py-[0.4rem] sm:py-[0.3rem] px-[0.4rem] sm:px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 text-[1rem]">{payment === "true" ? imageGen : "0"} <BsFillSuitDiamondFill /></button>
               <Link href={"/pricing"} className="sm:flex items-center gap-[0.3rem] text-[#8a40fc] py-[0.3rem] px-[0.7rem] rounded-xl hover:bg-gray-800 duration-150 bg-[#170039] hidden"><FaCrown /> <span className="hidden sm:block">Upgrade</span></Link>
               <img
                 src={user?.photoURL || "../public/profile.png"}
