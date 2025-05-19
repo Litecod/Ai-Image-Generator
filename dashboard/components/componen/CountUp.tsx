@@ -9,8 +9,8 @@ import Right from "@/public/landingpageImage/right.svg"
 const CountUps = () => {
     return (
         <div className="px-[0.8rem] md:px-[2rem] lg:px-[rem] mt-[5rem]">
-            <div className="text-[#ffffff] flex flex-col md:flex-row mx-auto items-center gap-[3rem]  md:gap-[4rem] md:max-w-[42rem] text-[1rem] sm:px-[2rem]  md:px-0 py-[3rem]">
-                <div className="flex flex-col sm:flex-row gap-[2rem] md:gap-[4rem] justify-between">
+            <div className="text-[#ffffff] flex flex-col md:flex-row mx-auto items-center gap-[3rem] w-full  md:gap-[4rem] md:max-w-[42rem] text-[1rem] sm:px-[2rem]  md:px-0 py-[3rem]">
+                <div className="flex max-md:flex-wrap gap-[2rem] max-md:max-w-[22rem] mx-auto max-md:w-full md:gap-[4rem] justify-center">
                     <div className=" flex items-center gap-1">
                         <Image src={Right} alt="image" className="w-[2rem] rotate-y-160" />
                         <div className="items-center text-center">

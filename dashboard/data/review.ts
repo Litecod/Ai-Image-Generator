@@ -8,7 +8,7 @@ import six from "@/public/landingpageImage/review6.png";
 import seven from "@/public/landingpageImage/review7.png";
 import eight from "@/public/landingpageImage/review8.jpg";
 
-const reviewss = [
+const reviewsv = [
   {
     id: 1,
     name: "Sophia Rae",
@@ -37,23 +37,9 @@ const reviewss = [
     image: reveiw,
     job: "Music Artist",
   },
-  {
-    id: 5,
-    name: "Riley Knox",
-    desc: "This tool is perfect for creating fast outfit ideas for my client's photo shoots. The details are sharp and the styles are fresh!",
-    image: five,
-    job: "Fashion Stylist",
-  },
-  {
-    id: 6,
-    name: "Noah Lee",
-    desc: "Cartoonify 3D gives me creative freedom to prototype furniture designs visually before heading into production.",
-    image: three,
-    job: "Product Designer",
-  },
 ];
 
 
 
 
-export {reviewss}
+export {reviewsv}
