@@ -10,6 +10,7 @@ const OAuth = () => {
 
     const auth = getAuth(app);
     const navigate = useRouter()
+    
 
     const handleGoogleClick = async () => {
         

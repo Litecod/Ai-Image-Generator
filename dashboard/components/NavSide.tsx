@@ -15,7 +15,7 @@ const NavSide: React.FC = () => {
   return (
     <div>
       {!isAuthenticated ? (
-        <div>
+        <div >
           <LoginPage />
           <Navbar setClick={setClick} />
           <Sidebar click={click} />

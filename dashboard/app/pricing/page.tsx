@@ -110,7 +110,7 @@ const Pricing = () => {
     }
   }
   return (
-    <div className='sm:pt-[5rem]  min-h-screen h-screen  '>
+    <div className='sm:pt-[4.5rem]  heig '>
       <div className="bg-gradient-to-br from-gray-950 via-gray-900 to-black border border-gray-900  rounded-xl h-full px-[0.8rem] md:px-[2rem] lg:px-[3rem] py-[5rem] sm:py-[1rem] ">
         <div className="max-w-6xl mx-auto">
           <div className="flex p-[0.5rem] bg-gray-900 border border-gray-800 rounded-[20rem] gap-[0.3rem] max-w-[18rem] mx-auto justify-between mt-[2rem] duration-3500 scroll-smooth text-white">

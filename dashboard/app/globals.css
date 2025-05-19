@@ -235,6 +235,9 @@ body {
     margin-left: 27rem;
     margin-right: 27rem;
   }
+  .heig {
+    height: 100vh;
+  }
 }
 @media (min-width: 2333px) {
   .apple {
