@@ -32,7 +32,7 @@ body {
   100% {
     width: 100%;
   }
-} 
+}
 .animate-spin-slow {
   animation: spin-slow 3s linear infinite;
 }
@@ -145,7 +145,7 @@ body {
 /* For the entire scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
-  height: 10px; 
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -163,7 +163,7 @@ body {
 }
 
 .con {
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
@@ -218,11 +218,12 @@ body {
 }
 
 @keyframes liquid {
-  0%, 100% {
-    filter: url('#liquid');
+  0%,
+  100% {
+    filter: url("#liquid");
   }
   50% {
-    filter: url('#liquid2');
+    filter: url("#liquid2");
   }
 }
 
@@ -257,4 +258,15 @@ body {
 
 .backgrounds {
   background: url(../public/backgrounds.png);
+}
+
+@media (min-width: 768px) {
+  .hid {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .hidd {
+    display: none;
+  }
 }
